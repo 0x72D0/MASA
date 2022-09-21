@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Profile.h"
+
 class Model
 {
     public:
@@ -35,6 +37,6 @@ class Model
     private:
 
     enum GraphicPage currentPage;
-
     int currentSelectorIndex;
+    Profile profile[10];
 };

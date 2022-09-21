@@ -9,7 +9,6 @@ class Menu
     public:
         Menu(): lcd(0x27, 20, 4) 
         {
-            
             currentlySelectedRow = 0;
         }
 
