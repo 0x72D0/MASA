@@ -7,17 +7,9 @@
 class Menu
 {
     public:
-
-        enum GraphicPage
-        {
-            MAIN=0,
-            MONITOR,
-            CONTROLLER
-        };
-
         Menu(): lcd(0x27, 20, 4) 
         {
-            currentPage = GraphicPage::MAIN;
+            
             currentlySelectedRow = 0;
         }
 
@@ -34,17 +26,17 @@ class Menu
         {
             updateScreen();
 
-            switch (currentPage)
+            switch (model->getCurrentGraphicPage())
             {
-                case GraphicPage::MAIN:
+                case Model::GraphicPage::MAIN:
                     printMainMenu();
                     break;
                 
-                case GraphicPage::MONITOR:
+                case Model::GraphicPage::MONITOR:
                     printMonitor();
                     break;
                 
-                case GraphicPage::CONTROLLER:
+                case Model::GraphicPage::CONTROLLER:
                     printController();
                     break;
                 
@@ -89,8 +81,6 @@ class Menu
 
         LiquidCrystal_I2C lcd;
         Model* model;
-
-        enum GraphicPage currentPage;
 
         int currentlySelectedRow;
 };
