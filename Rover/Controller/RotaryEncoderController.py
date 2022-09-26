@@ -1,0 +1,2 @@
+class RotaryEncoderController():
+    pass
