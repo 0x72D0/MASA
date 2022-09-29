@@ -6,4 +6,5 @@ if __name__ == "__main__":
     lcd = LcdView(model)
 
     while True:
+        lcd.update_lcd_screen()
         pass

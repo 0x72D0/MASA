@@ -3,6 +3,11 @@ from Controller.ButtonController import ButtonController
 from Controller.RotaryEncoderController import RotaryEncoderController
 
 class Menu:
-    _currentGraphicPage = GraphicPage.MAIN
-    _encoder = RotaryEncoderController()
-    _backButton = ButtonController()
+    def __init__(self) -> None:
+        self._currentGraphicPage = GraphicPage.MAIN
+        self._encoder = RotaryEncoderController()
+        self._backButton = ButtonController()
+
+    def getCurrentGraphicPage(self) -> GraphicPage:
+        return self._currentGraphicPage
+
