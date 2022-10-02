@@ -1,10 +1,17 @@
 from Model.Model import Model
 from View.LcdView import LcdView
+from RPi import GPIO
 
 if __name__ == "__main__":
-    model = Model()
-    lcd = LcdView(model)
+    try:
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
 
-    while True:
-        lcd.update_lcd_screen()
-        pass
+        model = Model()
+        lcd = LcdView(model)
+
+        while True:
+            lcd.update_lcd_screen()
+            model.updateModel()
+    finally:
+        GPIO.cleanup()

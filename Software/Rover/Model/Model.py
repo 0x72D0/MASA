@@ -7,3 +7,9 @@ class Model:
 
     def getCurrentGraphicPage(self) -> GraphicPage:
         return self._menu.getCurrentGraphicPage()
+    
+    def getCurrentCursor(self) -> int:
+        return self._menu.getCurrentIndex()
+    
+    def updateModel(self):
+        self._menu.updateMenu()
