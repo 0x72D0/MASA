@@ -1,15 +1,18 @@
 from Controller.CustomBluetoothController import CustomBluetoothController
+from Model.ComponentType import ComponentType
 from Model.Menu import Menu
+from Model.Profile import Profile
 from Model.GraphicPage import GraphicPage
-from View.ServoMotorView import ServoMotorView
+from Model.ServoMotor import ServoMotor
 
 class Model:
-    def __init__(self) -> None: 
+    def __init__(self) -> None:
+        self.SERVO_NUM = 8
+
         self._menu = Menu()
-        self._controller = CustomBluetoothController()
-        self._servo = ServoMotorView()
-        self._test = True
-        self._test_channel = 15
+        self._currentProfile = Profile()
+
+        self._servos = [ServoMotor()] * self.SERVO_NUM
 
     def getCurrentGraphicPage(self) -> GraphicPage:
         return self._menu.getCurrentGraphicPage()
@@ -17,15 +20,19 @@ class Model:
     def getCurrentCursor(self) -> int:
         return self._menu.getCurrentIndex()
     
-    def updateModel(self):
-        self._menu.updateMenu()
-        recv = self._controller.readPacket()
+    def getServosAngle(self) -> list:
+        tempList = []
+        for servo in self._servos:
+            tempList.append(servo.getAngle())
+        return tempList
 
-        if recv == b'\xaa\x01\x00\xbb\r\n':
-            if self._test:
-                self._servo.write_angle(self._test_channel, 20)
-                self._test = False
-            else:
-                self._servo.write_angle(self._test_channel, 1)
-                self._test = True
-            print("receive packet")
+    
+    def update(self):
+        self._menu.update()
+        self._currentProfile.update()
+
+        while not self._currentProfile.actionIsEmpty():
+            mapping = self._currentProfile.get_nextMapping()
+            
+            if mapping.get_componentType() == ComponentType.SERVO_MOTOR:
+                self._servos[mapping.get_componentPosition()].update(mapping.get_action())

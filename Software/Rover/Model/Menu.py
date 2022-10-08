@@ -20,7 +20,7 @@ class Menu:
     def getCurrentIndex(self) -> int:
         return self._currentIndex
     
-    def updateMenu(self):
+    def update(self):
         self._currentIndex = self._encoder.getValue()
 
         if self._currentIndex < 0:

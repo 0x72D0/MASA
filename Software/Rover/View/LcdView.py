@@ -14,6 +14,7 @@ class LcdView:
 
         self._model = model
         self._lcd = CharLCD(cols=self.COL, rows=self.ROW, pin_rs=Pinout.LCD_RS_PIN, pin_e=Pinout.LCD_E_PIN, pins_data=[Pinout.LCD_D1_PIN, Pinout.LCD_D2_PIN, Pinout.LCD_D3_PIN, Pinout.LCD_D4_PIN], numbering_mode=GPIO.BOARD)
+        self._lcd.clear()
 
         self._currentCursorPos = 1
         self._lastSubPage = 0
@@ -21,7 +22,7 @@ class LcdView:
         self.SELECT_ARROW_CHAR = ( 0b00000, 0b00100, 0b00110, 0b11111, 0b11111, 0b00110, 0b00100, 0b00000 )
 
 
-    def update_lcd_screen(self):
+    def update(self):
         currentGraphicPage = self._model.getCurrentGraphicPage()
         currentCursor = self._model.getCurrentCursor()
 
