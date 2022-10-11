@@ -1,3 +1,4 @@
+from Model.Menu.Menu import Menu
 from Model.Model import Model
 from View.LcdView import LcdView
 from View.PCA9685View import PCA9685View
@@ -9,12 +10,14 @@ if __name__ == "__main__":
         GPIO.setwarnings(False)
 
         model = Model()
-        lcd = LcdView(model)
+        menu = Menu(model)
+        lcd = LcdView(model, menu)
         pca9685 = PCA9685View(model)
 
         while True:
-            lcd.update()
             model.update()
+            menu.update()
+            lcd.update()
             pca9685.update()
             
     finally:

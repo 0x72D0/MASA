@@ -1,5 +1,6 @@
 from matplotlib.cbook import ls_mapper
-from Model.GraphicPage import GraphicPage
+from Model.Menu.GraphicPage import GraphicPage
+from Model.Menu.Menu import Menu
 from Model.Model import Model
 from RPLCD import CharLCD
 from RPi import GPIO
@@ -8,11 +9,12 @@ import Pinout
 
 
 class LcdView:
-    def __init__(self, model: Model) -> None:
+    def __init__(self, model: Model, menu: Menu) -> None:
         self.COL = 20
         self.ROW = 4
 
         self._model = model
+        self._menu = menu
         self._lcd = CharLCD(cols=self.COL, rows=self.ROW, pin_rs=Pinout.LCD_RS_PIN, pin_e=Pinout.LCD_E_PIN, pins_data=[Pinout.LCD_D1_PIN, Pinout.LCD_D2_PIN, Pinout.LCD_D3_PIN, Pinout.LCD_D4_PIN], numbering_mode=GPIO.BOARD)
         self._lcd.clear()
 
@@ -23,8 +25,8 @@ class LcdView:
 
 
     def update(self):
-        currentGraphicPage = self._model.getCurrentGraphicPage()
-        currentCursor = self._model.getCurrentCursor()
+        currentGraphicPage = self._menu.get_currentGraphicPage()
+        currentCursor = self._menu.get_currentIndex()
 
         if self._lastSubPage != currentCursor // self.ROW:
             self._lcd.clear()
