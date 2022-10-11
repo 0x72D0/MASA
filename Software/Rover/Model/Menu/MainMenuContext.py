@@ -16,7 +16,7 @@ class MainMenuContext(IMenuContext):
 
     def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController) -> IMenuContext:
         nextContext = self
-        self._handleClassicMenuIndex(encoderHandle)
+        self._handleListMenuIndex(encoderHandle)
         
         # manage the menu Accept button
         acceptButtonState = buttonHandle.get_rotaryEncoderButtonState()
@@ -24,6 +24,7 @@ class MainMenuContext(IMenuContext):
 
         if self._graphicPage == GraphicPage.MAIN:
             if acceptButtonState == 1:
+                print("accept")
                 if self._currentIndex == 2:
                     nextContext = ControllerMenuContext(model)
         

@@ -15,7 +15,7 @@ class IMenuContext:
         self._maxIndex = IMenuContext.__graphicPageMaxIndex[graphicPage]
         self._currentIndex = 0
     
-    def _handleClassicMenuIndex(self, encoderHandle: RotaryEncoderController):
+    def _handleListMenuIndex(self, encoderHandle: RotaryEncoderController):
         self._currentIndex = encoderHandle.getValue()
 
         if self._currentIndex < 0:

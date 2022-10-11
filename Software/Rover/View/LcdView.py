@@ -10,11 +10,10 @@ from Model.Menu.MenuType import MenuType
 
 
 class LcdView:
-    def __init__(self, model: Model, menu: Menu) -> None:
+    def __init__(self, menu: Menu) -> None:
         self.COL = 20
         self.ROW = 4
 
-        self._model = model
         self._menu = menu
         self._lcd = CharLCD(cols=self.COL, rows=self.ROW, pin_rs=Pinout.LCD_RS_PIN, pin_e=Pinout.LCD_E_PIN, pins_data=[Pinout.LCD_D1_PIN, Pinout.LCD_D2_PIN, Pinout.LCD_D3_PIN, Pinout.LCD_D4_PIN], numbering_mode=GPIO.BOARD)
         self._lcd.clear()

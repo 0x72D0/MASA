@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
         model = Model()
         menu = Menu(model)
-        lcd = LcdView(model, menu)
+        lcd = LcdView(menu)
         pca9685 = PCA9685View(model)
 
         while True:

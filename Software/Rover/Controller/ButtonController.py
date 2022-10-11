@@ -7,9 +7,9 @@ class ButtonController():
     __backButtonState = 0
 
     def __init__(self):
-        GPIO.setup(Pinout.ROTARY_ENCODER_SW_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(Pinout.ROTARY_ENCODER_SW_PIN, GPIO.IN)
         GPIO.add_event_detect(Pinout.ROTARY_ENCODER_SW_PIN, GPIO.BOTH, callback=ButtonController.rotaryEncoderSwCallback)
-        GPIO.setup(Pinout.BACK_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(Pinout.BACK_BUTTON_PIN, GPIO.IN)
         GPIO.add_event_detect(Pinout.BACK_BUTTON_PIN, GPIO.BOTH, callback=ButtonController.backButtonCallback)
 
     def get_rotaryEncoderButtonState(self):
@@ -24,10 +24,10 @@ class ButtonController():
 
     def rotaryEncoderSwCallback(channel):
         # if there's a falling edge
-        if not GPIO.INPUT(Pinout.ROTARY_ENCODER_SW_PIN):
+        if not GPIO.input(Pinout.ROTARY_ENCODER_SW_PIN):
             ButtonController.__rotaryEncoderSwState = 1
 
     def backButtonCallback(channel):
         # if there's a falling edge
-        if not GPIO.INPUT(Pinout.BACK_BUTTON_PIN):
+        if not GPIO.input(Pinout.BACK_BUTTON_PIN):
             ButtonController.__backButtonState = 1

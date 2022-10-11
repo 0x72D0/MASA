@@ -12,8 +12,6 @@ class ServoMotorView():
 
         self._i2cBus.write_byte_data(self._addr, 0, 0b00000001)
 
-
-    
     def write_angle(self, channel, angle):
         ms = (angle/180)*19
         pwm = round(((ms+1)/20)*4095)
