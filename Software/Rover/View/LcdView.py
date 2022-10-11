@@ -6,6 +6,7 @@ from RPLCD import CharLCD
 from RPi import GPIO
 
 import Pinout
+from Model.Menu.MenuType import MenuType
 
 
 class LcdView:
@@ -25,38 +26,34 @@ class LcdView:
 
 
     def update(self):
-        currentGraphicPage = self._menu.get_currentGraphicPage()
+        currentMenuType, args = self._menu.get_currentMenuType()
         currentCursor = self._menu.get_currentIndex()
 
         if self._lastSubPage != currentCursor // self.ROW:
             self._lcd.clear()
             self._lastSubPage = currentCursor // self.ROW
 
-        if currentGraphicPage == GraphicPage.MAIN:
-            self._drawMainPage(currentCursor)
+        if currentMenuType == MenuType.LIST:
+            self._drawList(currentCursor, args)
         
         if currentCursor != self._currentCursorPos:
             self._drawCursor(currentCursor)
     
-    def _drawMainPage(self, cursorPos):
-        if cursorPos < 4:
-            self._lcd.cursor_pos = (0,2)
-            self._lcd.write_string(u'Monitor >')
-            self._lcd.cursor_pos = (1,2)
-            self._lcd.write_string(u'Pairing >')
-            self._lcd.cursor_pos = (2,2)
-            self._lcd.write_string(u'Controller >')
+    def _drawList(self, cursorPos, args: list):
+        menuToDraw = cursorPos // 4
 
-            self._lcd.cursor_pos = (3,0)
-            self._lcd.write_string(u'v')
-        
-        elif cursorPos < 8:
-            self._lcd.cursor_pos = (0,2)
-            self._lcd.write_string(u'Test >')
+        # manage the case where nothing is in the list
+        for i in range((menuToDraw*4+4)-len(args)):
+            args.append(u' ')
 
-            self._lcd.cursor_pos = (0,0)
-            self._lcd.write_string(u'^')
-            
+        self._lcd.cursor_pos = (0,2)
+        self._lcd.write_string(args[menuToDraw*4+0])
+        self._lcd.cursor_pos = (1,2)
+        self._lcd.write_string(args[menuToDraw*4+1])
+        self._lcd.cursor_pos = (2,2)
+        self._lcd.write_string(args[menuToDraw*4+2])
+        self._lcd.cursor_pos = (3,2)
+        self._lcd.write_string(args[menuToDraw*4+3])
     
     def _drawCursor(self, position):
         if position >= self.ROW:

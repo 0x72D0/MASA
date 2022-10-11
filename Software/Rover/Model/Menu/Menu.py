@@ -9,6 +9,9 @@ class Menu:
         self._encoder = RotaryEncoderController()
         self._button = ButtonController()
         self._currentContext = MainMenuContext(model)
+    
+    def get_currentMenuType(self) -> tuple:
+        return self._currentContext.get_menuStructure()
 
     def get_currentGraphicPage(self) -> GraphicPage:
         return self._currentContext.get_currentGraphicPage()
