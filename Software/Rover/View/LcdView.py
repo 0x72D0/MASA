@@ -20,6 +20,7 @@ class LcdView:
 
         self._currentCursorPos = 1
         self._lastSubPage = 0
+        self._lastGraphicPage = None
 
         self.SELECT_ARROW_CHAR = ( 0b00000, 0b00100, 0b00110, 0b11111, 0b11111, 0b00110, 0b00100, 0b00000 )
 
@@ -27,6 +28,11 @@ class LcdView:
     def update(self):
         currentMenuType, args = self._menu.get_currentMenuType()
         currentCursor = self._menu.get_currentIndex()
+        currentGraphicPage = self._menu.get_currentGraphicPage()
+
+        if self._lastGraphicPage != currentGraphicPage:
+            self._lcd.clear()
+            self._lastGraphicPage = currentGraphicPage
 
         if self._lastSubPage != currentCursor // self.ROW:
             self._lcd.clear()

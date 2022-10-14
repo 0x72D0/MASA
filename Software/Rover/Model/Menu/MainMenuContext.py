@@ -1,3 +1,4 @@
+from Model.Menu.ControllerMenuContext import ControllerMenuContext
 from Model.Model import Model
 from Model.Menu.IMenuContext import IMenuContext
 from Controller.ButtonController import ButtonController
@@ -9,7 +10,6 @@ from Model.Menu.MenuType import MenuType
 class MainMenuContext(IMenuContext):
     def __init__(self, model: Model) -> None:
         super().__init__(model, GraphicPage.MAIN)
-        pass
 
     def get_menuStructure(self) -> tuple:
         return MenuType.LIST, [u'Monitor >', u'Pairing >', u'Controller >', u'Test >', u'Test2 >']
@@ -22,10 +22,10 @@ class MainMenuContext(IMenuContext):
         acceptButtonState = buttonHandle.get_rotaryEncoderButtonState()
         backButtonState = buttonHandle.get_backButtonState()
 
-        if self._graphicPage == GraphicPage.MAIN:
-            if acceptButtonState == 1:
-                print("accept")
-                if self._currentIndex == 2:
-                    nextContext = ControllerMenuContext(model)
+        if acceptButtonState == 1:
+            print("accept")
+            if self._currentIndex == 2:
+                print("controller menu")
+                nextContext = ControllerMenuContext(self._model)
         
         return nextContext
