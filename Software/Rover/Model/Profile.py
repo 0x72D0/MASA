@@ -13,12 +13,32 @@ class Profile:
         self._mappings = []
         self._controller = CustomBluetoothController()
         self._mappingQueue = Queue()
+        self._waiting_for_packet = False
 
     def update(self):
+        packet = 'a'
+        if not self._waiting_for_packet:
+            while len(packet) != 0:
+                packet = self._controller.readPacket()
+
+                for map in self._mappings:
+                    if map.validateInput(packet):
+                        self._mappingQueue.put(map)
+        
+    
+    def mapNextInputToProfile(self, action: Action, component:Component):
+        self._waiting_for_packet = True
         packet = self._controller.readPacket()
 
-        if packet == b'\xaa\x01\x00\xbb\r\n':
-            self._mappingQueue.put(Mapping(Action(ActionType.TOGGLE, [20]), b'\xaa\x01\x00\xbb\r\n', Component(ComponentType.SERVO_MOTOR, 0)))
+        if len(packet) == 0:
+            return False
+
+        self._mappings.append(Mapping(action, packet, component))
+        print("mapping " + str(packet))
+
+        self._waiting_for_packet = False
+
+        return True
     
     def actionIsEmpty(self) -> bool:
         return self._mappingQueue.empty()

@@ -1,7 +1,7 @@
-from Controller.CustomBluetoothController import CustomBluetoothController
+from Model.Action import Action
+from Model.Component import Component
 from Model.ComponentType import ComponentType
 from Model.Profile import Profile
-from Model.Menu.GraphicPage import GraphicPage
 from Model.ServoMotor import ServoMotor
 
 class Model:
@@ -17,7 +17,12 @@ class Model:
         for servo in self._servos:
             tempList.append(servo.getAngle())
         return tempList
+    
+    def startNewProfile(self):
+        self._currentProfile = Profile()
 
+    def mapNextInputToProfile(self, action: Action, component:Component) -> bool:
+        return self._currentProfile.mapNextInputToProfile(action, component)
     
     def update(self):
         self._currentProfile.update()

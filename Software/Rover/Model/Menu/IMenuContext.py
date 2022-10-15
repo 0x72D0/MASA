@@ -6,9 +6,11 @@ from Model.Menu.MenuType import MenuType
 
 class IMenuContext:
     __graphicPageMaxIndex = {
+            GraphicPage.NONE: 0,
             GraphicPage.MAIN: 7,
             GraphicPage.CONTROLLER: 2,
-            GraphicPage.PROFILE: 1
+            GraphicPage.PROFILE: 1,
+            GraphicPage.WAITING_INPUT: 0
         }
 
     def __init__(self, model: Model, graphicPage: GraphicPage) -> None:

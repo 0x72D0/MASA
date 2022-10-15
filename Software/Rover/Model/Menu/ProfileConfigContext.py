@@ -3,6 +3,7 @@ from Controller.RotaryEncoderController import RotaryEncoderController
 from Model.Menu.GraphicPage import GraphicPage
 from Model.Menu.IMenuContext import IMenuContext
 from Model.Menu.MenuType import MenuType
+from Model.Menu.WaitingInputMenuContext import WaitingInputMenuContext
 from Model.Model import Model
 
 
@@ -20,5 +21,9 @@ class ProfileConfigContext(IMenuContext):
         # manage the menu Accept button
         acceptButtonState = buttonHandle.get_rotaryEncoderButtonState()
         backButtonState = buttonHandle.get_backButtonState()
+
+        if acceptButtonState == 1:
+            if self._currentIndex == 0:
+                nextContext = WaitingInputMenuContext(self._model, self)
         
         return nextContext

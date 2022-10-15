@@ -11,7 +11,7 @@ class PCA9685View():
         #set the prescaler
         self._i2cBus.write_byte_data(self._addr, 254, 121)
 
-        print(self._i2cBus.read_byte_data(self._addr, 254))
+        #print(self._i2cBus.read_byte_data(self._addr, 254))
 
         self._i2cBus.write_byte_data(self._addr, 0, 0b00000001)
     
@@ -31,7 +31,7 @@ class PCA9685View():
         self._i2cBus.write_byte_data(self._addr, channel*4+8, byte1)
         self._i2cBus.write_byte_data(self._addr, channel*4+9, byte2)
 
-        print(self._i2cBus.read_byte_data(self._addr, channel*4+6))
-        print(self._i2cBus.read_byte_data(self._addr, channel*4+7))
-        print(self._i2cBus.read_byte_data(self._addr, channel*4+8))
-        print(self._i2cBus.read_byte_data(self._addr, channel*4+9))
+        #print(self._i2cBus.read_byte_data(self._addr, channel*4+6))
+        #print(self._i2cBus.read_byte_data(self._addr, channel*4+7))
+        #print(self._i2cBus.read_byte_data(self._addr, channel*4+8))
+        #print(self._i2cBus.read_byte_data(self._addr, channel*4+9))

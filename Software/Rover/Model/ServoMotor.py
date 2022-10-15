@@ -12,10 +12,12 @@ class ServoMotor:
     def update(self, action: Action) -> None:
         if self._currentState == ServoState.INIT:
             if action.get_actionType() == ActionType.TOGGLE:
+                print("servo ON")
                 self._currentAngle = action.get_actionArguments()[0]
                 self._currentState = ServoState.TOGGLE_ON
         elif self._currentState == ServoState.TOGGLE_ON:
             if action.get_actionType() == ActionType.TOGGLE:
+                print("servo OFF")
                 self._currentAngle = 0
                 self._currentState = ServoState.INIT
     

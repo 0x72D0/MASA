@@ -21,3 +21,8 @@ class Mapping:
     
     def get_action(self):
         return self._action
+    
+    def validateInput(self, input) -> bool:
+        if input == self._input:
+            return True
+        return False

@@ -1,7 +1,9 @@
 from enum import Enum
 
 class GraphicPage(Enum):
-    MAIN = 0
-    MONITOR = 1
-    CONTROLLER = 2
-    PROFILE = 3
+    NONE = 0
+    MAIN = 1
+    MONITOR = 2
+    CONTROLLER = 3
+    PROFILE = 4
+    WAITING_INPUT = 5
