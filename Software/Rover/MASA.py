@@ -1,3 +1,5 @@
+# program entrypoint
+
 from Model.Menu.Menu import Menu
 from Model.Model import Model
 from View.LcdView import LcdView

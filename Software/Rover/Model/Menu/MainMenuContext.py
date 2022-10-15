@@ -8,6 +8,7 @@ from Model.Menu.MenuType import MenuType
 
 
 class MainMenuContext(IMenuContext):
+    """Menu context of the main menu."""
     def __init__(self, model: Model) -> None:
         super().__init__(model, GraphicPage.MAIN)
 

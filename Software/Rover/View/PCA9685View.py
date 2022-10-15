@@ -3,6 +3,7 @@ from smbus2 import SMBus
 from Model.Model import Model
 
 class PCA9685View():
+    """Class that control the PCA9685."""
     def __init__(self, model: Model):
         self._addr = 0x41
         self._model = model

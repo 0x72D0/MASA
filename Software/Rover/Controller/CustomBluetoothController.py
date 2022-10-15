@@ -3,6 +3,7 @@ import serial
 from Controller.IController import IController
 
 class CustomBluetoothController(IController):
+    """Controller that implement a custom bluetooth controller."""
     def __init__(self):
         self._serial = serial.Serial("/dev/rfcomm0", timeout=0.1)
     

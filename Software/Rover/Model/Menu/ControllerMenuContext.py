@@ -8,6 +8,7 @@ from Model.Menu.GraphicPage import GraphicPage
 
 
 class ControllerMenuContext(IMenuContext):
+    """Menu that decide what profile the user gonna use."""
     def __init__(self, model: Model) -> None:
         super().__init__(model, GraphicPage.CONTROLLER)
     

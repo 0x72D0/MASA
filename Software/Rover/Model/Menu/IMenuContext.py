@@ -5,6 +5,7 @@ from Model.Menu.GraphicPage import GraphicPage
 from Model.Menu.MenuType import MenuType
 
 class IMenuContext:
+    """Interface that all menu context inherit."""
     __graphicPageMaxIndex = {
             GraphicPage.NONE: 0,
             GraphicPage.MAIN: 7,

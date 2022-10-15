@@ -11,6 +11,7 @@ from Model.Menu.GraphicPage import GraphicPage
 
 
 class WaitingInputMenuContext(IMenuContext):
+    """Menu Context for the waiting input menu context."""
     def __init__(self, model: Model, parentMenu: IMenuContext) -> None:
         self._parentMenu = parentMenu
         super().__init__(model, GraphicPage.WAITING_INPUT)

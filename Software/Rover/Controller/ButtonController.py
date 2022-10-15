@@ -3,6 +3,7 @@ import Pinout
 from RPi import GPIO
 
 class ButtonController():
+    """Controller that control all the input for the GPIO button."""
     __rotaryEncoderSwState = 0
     __backButtonState = 0
 

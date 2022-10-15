@@ -10,6 +10,7 @@ from Model.Menu.MenuType import MenuType
 
 
 class LcdView:
+    """Class that control the lcd2004"""
     def __init__(self, menu: Menu) -> None:
         self.COL = 20
         self.ROW = 4

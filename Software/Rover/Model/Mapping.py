@@ -3,6 +3,7 @@ from Model.Action import Action
 
 
 class Mapping:
+    """Class that define a button Mapping, this class tell which button is link to which action and component."""
     def __init__(self) -> None:
         self._action = Action()
         self._input = ""

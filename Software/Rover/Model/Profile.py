@@ -9,6 +9,7 @@ from Model.Mapping import Mapping
 
 
 class Profile:
+    """Class that define one profile."""
     def __init__(self) -> None:
         self._mappings = []
         self._controller = CustomBluetoothController()

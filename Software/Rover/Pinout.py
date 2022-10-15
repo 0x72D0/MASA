@@ -1,3 +1,5 @@
+# contains all pinout definition
+
 ROTARY_ENCODER_D2_PIN=38
 ROTARY_ENCODER_D3_PIN=40
 ROTARY_ENCODER_SW_PIN=19

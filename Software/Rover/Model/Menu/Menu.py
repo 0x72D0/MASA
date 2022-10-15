@@ -5,6 +5,7 @@ from Model.Model import Model
 from Model.Menu.MainMenuContext import MainMenuContext
 
 class Menu:
+    """Model class that contains the menu logic."""
     def __init__(self, model: Model) -> None:
         self._encoder = RotaryEncoderController()
         self._button = ButtonController()
@@ -20,7 +21,8 @@ class Menu:
         return self._currentContext.get_currentIndex()
     
     def update(self):
-        # manage the cursor index
+        # manage the context
+        # here's the menu is a state machine design pattern
         self._currentContext = self._currentContext.update(self._encoder, self._button)
 
         

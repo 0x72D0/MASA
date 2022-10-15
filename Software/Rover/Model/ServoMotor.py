@@ -5,6 +5,7 @@ from Model.ServoState import ServoState
 
 
 class ServoMotor:
+    """Class that define one servo motor component"""
     def __init__(self) -> None:
         self._currentAngle = 0
         self._currentState = ServoState.INIT

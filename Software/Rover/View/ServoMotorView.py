@@ -1,6 +1,7 @@
 from smbus2 import SMBus
 
 class ServoMotorView():
+    """Class that control the servo motor."""
     def __init__(self):
         self._addr = 0x41
         self._i2cBus = SMBus(1)

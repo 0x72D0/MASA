@@ -8,6 +8,7 @@ from Model.Model import Model
 
 
 class ProfileConfigContext(IMenuContext):
+    """Menu context of the profile configuration."""
     def __init__(self, model: Model) -> None:
         super().__init__(model, GraphicPage.PROFILE)
 

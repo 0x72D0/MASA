@@ -5,6 +5,7 @@ from Model.Profile import Profile
 from Model.ServoMotor import ServoMotor
 
 class Model:
+    """Singleton that define all the model."""
     def __init__(self) -> None:
         self.SERVO_NUM = 8
 
