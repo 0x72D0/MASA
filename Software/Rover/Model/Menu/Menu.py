@@ -1,3 +1,4 @@
+from collections import deque
 from Model.Menu.GraphicPage import GraphicPage
 from Controller.ButtonController import ButtonController
 from Controller.RotaryEncoderController import RotaryEncoderController
@@ -9,21 +10,21 @@ class Menu:
     def __init__(self, model: Model) -> None:
         self._encoder = RotaryEncoderController()
         self._button = ButtonController()
-        self._currentContext = MainMenuContext(model)
+        self._menuStack = deque([MainMenuContext(model)])
     
     def get_currentMenuType(self) -> tuple:
-        return self._currentContext.get_menuStructure()
+        return self._menuStack[-1].get_menuStructure()
 
     def get_currentGraphicPage(self) -> GraphicPage:
-        return self._currentContext.get_currentGraphicPage()
+        return self._menuStack[-1].get_currentGraphicPage()
     
     def get_currentIndex(self) -> int:
-        return self._currentContext.get_currentIndex()
+        return self._menuStack[-1].get_currentIndex()
     
     def update(self):
         # manage the context
         # here's the menu is a state machine design pattern
-        self._currentContext = self._currentContext.update(self._encoder, self._button)
+        self._menuStack[-1].update(self._encoder, self._button, self._menuStack)
 
         
 

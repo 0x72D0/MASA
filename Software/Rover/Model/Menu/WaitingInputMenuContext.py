@@ -1,3 +1,4 @@
+from collections import deque
 from Model.Action import Action
 from Model.ActionType import ActionType
 from Model.Component import Component
@@ -12,23 +13,22 @@ from Model.Menu.GraphicPage import GraphicPage
 
 class WaitingInputMenuContext(IMenuContext):
     """Menu Context for the waiting input menu context."""
-    def __init__(self, model: Model, parentMenu: IMenuContext) -> None:
-        self._parentMenu = parentMenu
+    def __init__(self, model: Model, action: Action, component: Component) -> None:
+        self._action = action
+        self._component = component
         super().__init__(model, GraphicPage.WAITING_INPUT)
     
     def get_menuStructure(self) -> tuple:
         return MenuType.STILL_MESSAGE, [u'waiting for input']
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController) -> IMenuContext:
-        nextContext = self
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: deque):
 
         accept = buttonHandle.get_rotaryEncoderButtonState()
         back = buttonHandle.backButtonCallback()
         
-        if self._model.mapNextInputToProfile(Action(ActionType.TOGGLE, [20]), Component(ComponentType.SERVO_MOTOR, 0)):
-            return self._parentMenu
+        if self._model.mapNextInputToProfile(self._action, self._component):
+            menuStack.pop()
         
         if back == 1:
-            return self._parentMenu
-        
-        return nextContext
+            menuStack.pop()
+            menuStack[-1].go_back()

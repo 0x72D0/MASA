@@ -1,4 +1,5 @@
-from Model.Menu.ControllerMenuContext import ControllerMenuContext
+from collections import deque
+from Model.Menu.ProfileMenuContext import ProfileMenuContext
 from Model.Model import Model
 from Model.Menu.IMenuContext import IMenuContext
 from Controller.ButtonController import ButtonController
@@ -15,8 +16,7 @@ class MainMenuContext(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.LIST, [u'Monitor >', u'Pairing >', u'Controller >', u'Test >', u'Test2 >']
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController) -> IMenuContext:
-        nextContext = self
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: deque) -> IMenuContext:
         self._handleListMenuIndex(encoderHandle)
         
         # manage the menu Accept button
@@ -26,7 +26,5 @@ class MainMenuContext(IMenuContext):
         if acceptButtonState == 1:
             print("accept")
             if self._currentIndex == 2:
-                print("controller menu")
-                nextContext = ControllerMenuContext(self._model)
-        
-        return nextContext
+                print("profile menu")
+                menuStack.append(ProfileMenuContext(self._model))

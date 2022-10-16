@@ -8,9 +8,11 @@ class Action:
         self._actionType = ActionType.NONE
         self._actionArguments = []
     
-    def __init__(self, actionType: ActionType, actionArguments: list):
+    def set_actionType(self, actionType: ActionType):
         self._actionType = actionType
-        self._actionArguments = actionArguments
+    
+    def addArgument(self, arg):
+        self._actionArguments.append(arg)
     
     def get_actionType(self):
         return self._actionType

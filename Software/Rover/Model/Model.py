@@ -2,6 +2,7 @@ from Model.Action import Action
 from Model.Component import Component
 from Model.ComponentType import ComponentType
 from Model.Profile import Profile
+from Model.ProfileDatabase import ProfileDatabase
 from Model.ServoMotor import ServoMotor
 
 class Model:
@@ -9,7 +10,8 @@ class Model:
     def __init__(self) -> None:
         self.SERVO_NUM = 8
 
-        self._currentProfile = Profile()
+        self._profileDatabase = ProfileDatabase()
+        self._currentProfileName = ""
 
         self._servos = [ServoMotor()] * self.SERVO_NUM
 
@@ -19,17 +21,30 @@ class Model:
             tempList.append(servo.getAngle())
         return tempList
     
-    def startNewProfile(self):
-        self._currentProfile = Profile()
+    def startNewProfile(self, name: str):
+        self._profileDatabase.newProfile(name)
 
     def mapNextInputToProfile(self, action: Action, component:Component) -> bool:
-        return self._currentProfile.mapNextInputToProfile(action, component)
+        profile = self._profileDatabase.get_profile(self._currentProfileName)
+        if profile is None:
+            return False
+        
+        return profile.mapNextInputToProfile(action, component)
+    
+    def setCurrentProfileName(self, name: str):
+        self._currentProfileName = name
+    
+    def get_profileNameList(self) -> list:
+        return self._profileDatabase.get_profilesName()
     
     def update(self):
-        self._currentProfile.update()
+        self._profileDatabase.save_profiles()
+        profile = self._profileDatabase.get_profile(self._currentProfileName)
+        if profile is not None:
+            profile.update()
 
-        while not self._currentProfile.actionIsEmpty():
-            mapping = self._currentProfile.get_nextMapping()
-            
-            if mapping.get_componentType() == ComponentType.SERVO_MOTOR:
-                self._servos[mapping.get_componentPosition()].update(mapping.get_action())
+            while not profile.actionIsEmpty():
+                mapping = profile.get_nextMapping()
+                
+                if mapping.get_componentType() == ComponentType.SERVO_MOTOR:
+                    self._servos[mapping.get_componentPosition()].update(mapping.get_action())

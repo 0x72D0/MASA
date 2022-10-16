@@ -8,3 +8,4 @@ class GraphicPage(Enum):
     CONTROLLER = 3
     PROFILE = 4
     WAITING_INPUT = 5
+    ADD_ARGUMENT = 6

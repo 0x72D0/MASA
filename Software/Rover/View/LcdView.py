@@ -46,6 +46,9 @@ class LcdView:
         
         if currentMenuType == MenuType.STILL_MESSAGE:
             self._drawStillMessage(args)
+        
+        if currentMenuType == MenuType.NUMBER_ARGUMENT:
+            self._drawNumberArgument(args)
     
     def _drawList(self, cursorPos, args: list):
         menuToDraw = cursorPos // 4
@@ -69,6 +72,12 @@ class LcdView:
     def _drawStillMessage(self, args: list):
         self._lcd.cursor_pos = (1,0)
         self._lcd.write_string(args[0])
+    
+    def _drawNumberArgument(self, args: list):
+        self._lcd.cursor_pos = (1,0)
+        self._lcd.write_string(args[0])
+        self._lcd.cursor_pos = (2,10)
+        self._lcd.write_string(str(args[1]))
     
     def _drawCursor(self, position):
         if position >= self.ROW:
