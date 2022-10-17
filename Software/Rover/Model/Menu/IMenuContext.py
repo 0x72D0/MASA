@@ -1,39 +1,23 @@
-from collections import deque
+from Model.Menu.MenuStack import MenuStack
 from Model.Model import Model
 from Controller.ButtonController import ButtonController
 from Controller.RotaryEncoderController import RotaryEncoderController
-from Model.Menu.GraphicPage import GraphicPage
-from Model.Menu.MenuType import MenuType
 
 class IMenuContext:
     """Interface that all menu context inherit."""
-    __graphicPageMaxIndex = {
-            GraphicPage.NONE: 0,
-            GraphicPage.MAIN: 7,
-            GraphicPage.CONTROLLER: 2,
-            GraphicPage.PROFILE: 1,
-            GraphicPage.WAITING_INPUT: 0,
-            GraphicPage.ADD_ARGUMENT: 0
-        }
 
-    def __init__(self, model: Model, graphicPage: GraphicPage) -> None:
+    def __init__(self, model: Model) -> None:
         self._model = model
-        self._graphicPage = graphicPage
-        self._maxIndex = IMenuContext.__graphicPageMaxIndex[graphicPage]
         self._currentIndex = 0
     
-    def _handleListMenuIndex(self, encoderHandle: RotaryEncoderController):
+    def _handleListMenuIndex(self, encoderHandle: RotaryEncoderController, maxIndex):
         self._currentIndex += encoderHandle.getValue()
-        encoderHandle.setValue(0)
 
         if self._currentIndex < 0:
             self._currentIndex = 0
 
-        elif self._currentIndex > self._maxIndex:
-            self._currentIndex = self._maxIndex
-    
-    def get_currentGraphicPage(self) -> GraphicPage:
-        return self._graphicPage
+        elif self._currentIndex >= maxIndex:
+            self._currentIndex = maxIndex
 
     def get_currentIndex(self) -> int:
         return self._currentIndex
@@ -42,5 +26,5 @@ class IMenuContext:
     def get_menuStructure(self) -> tuple:
         pass
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: deque):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
         pass

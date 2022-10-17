@@ -1,14 +1,13 @@
-from collections import deque
 from Model.Action import Action
 from Model.ActionType import ActionType
 from Model.Component import Component
 from Model.ComponentType import ComponentType
+from Model.Menu.MenuStack import MenuStack
 from Model.Menu.MenuType import MenuType
 from Model.Model import Model
 from Model.Menu.IMenuContext import IMenuContext
 from Controller.ButtonController import ButtonController
 from Controller.RotaryEncoderController import RotaryEncoderController
-from Model.Menu.GraphicPage import GraphicPage
 
 
 class WaitingInputMenuContext(IMenuContext):
@@ -16,12 +15,12 @@ class WaitingInputMenuContext(IMenuContext):
     def __init__(self, model: Model, action: Action, component: Component) -> None:
         self._action = action
         self._component = component
-        super().__init__(model, GraphicPage.WAITING_INPUT)
+        super().__init__(model)
     
     def get_menuStructure(self) -> tuple:
         return MenuType.STILL_MESSAGE, [u'waiting for input']
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: deque):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
 
         accept = buttonHandle.get_rotaryEncoderButtonState()
         back = buttonHandle.backButtonCallback()
@@ -30,5 +29,4 @@ class WaitingInputMenuContext(IMenuContext):
             menuStack.pop()
         
         if back == 1:
-            menuStack.pop()
-            menuStack[-1].go_back()
+            menuStack.pop_recursive()

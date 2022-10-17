@@ -1,13 +1,12 @@
-from collections import deque
 from Controller.ButtonController import ButtonController
 from Controller.RotaryEncoderController import RotaryEncoderController
 from Model.Action import Action
 from Model.ActionType import ActionType
 from Model.Component import Component
 from Model.ComponentType import ComponentType
-from Model.Menu.GraphicPage import GraphicPage
 from Model.Menu.IMenuContext import IMenuContext
 from Model.Menu.MappingMenuContext import MappingMenuContext
+from Model.Menu.MenuStack import MenuStack
 from Model.Menu.MenuType import MenuType
 from Model.Menu.WaitingInputMenuContext import WaitingInputMenuContext
 from Model.Menu.AddNumberArgumentsMenuContext import AddNumberArgumentsMenuContext
@@ -17,13 +16,14 @@ from Model.Model import Model
 class ProfileConfigContext(IMenuContext):
     """Menu context of the profile configuration."""
     def __init__(self, model: Model) -> None:
-        super().__init__(model, GraphicPage.PROFILE)
+        self._MAX_INDEX = 1
+        super().__init__(model)
 
     def get_menuStructure(self) -> tuple:
         return MenuType.LIST, [u'servo toggle']
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: deque):
-        self._handleListMenuIndex(encoderHandle)
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+        self._handleListMenuIndex(encoderHandle, self._MAX_INDEX)
         
         # manage the menu Accept button
         acceptButtonState = buttonHandle.get_rotaryEncoderButtonState()
@@ -40,4 +40,7 @@ class ProfileConfigContext(IMenuContext):
                     AddNumberArgumentsMenuContext(self._model, action, component, u'servo angle', 150, 0),
                     WaitingInputMenuContext(self._model, action, component)
                 ])
-                menuStack.append(nextContext)
+                menuStack.add(nextContext)
+        
+        if backButtonState == 1:
+            menuStack.pop()

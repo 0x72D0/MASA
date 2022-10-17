@@ -64,7 +64,9 @@ class Encoder:
         self.state = newState
 
     def getValue(self):
-        return self.value
+        temp = self.value
+        self.setValue(0)
+        return temp
     
     def setValue(self, value):
         self.value = value

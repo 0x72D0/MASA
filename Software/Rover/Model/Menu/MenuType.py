@@ -6,4 +6,5 @@ class MenuType(Enum):
     LIST = 1
     STILL_MESSAGE = 2
     NUMBER_ARGUMENT = 3
+    INPUT_CHAR = 4
     
