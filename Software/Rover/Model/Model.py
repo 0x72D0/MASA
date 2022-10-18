@@ -14,6 +14,10 @@ class Model:
         self._currentProfileName = ""
 
         self._servos = [ServoMotor()] * self.SERVO_NUM
+    
+    def cleanup(self):
+        if self._profileDatabase.get_profile(self._currentProfileName) != None:
+            self._profileDatabase.get_profile(self._currentProfileName).cleanup()
 
     def getServosAngle(self) -> list:
         tempList = []

@@ -1,10 +1,8 @@
 from queue import Queue
 
-from Controller.CustomBluetoothController import CustomBluetoothController
+from Controller.DabbleGamepadBluetoothController import DabbleGamepadBluetoothController
 from Model.Action import Action
-from Model.ActionType import ActionType
 from Model.Component import Component
-from Model.ComponentType import ComponentType
 from Model.Mapping import Mapping
 
 
@@ -13,7 +11,7 @@ class Profile:
     def __init__(self, name) -> None:
         self._name = name
         self._mappings = []
-        self._controller = CustomBluetoothController()
+        self._controller = DabbleGamepadBluetoothController()
         self._mappingQueue = Queue()
         self._waiting_for_packet = False
     
@@ -22,20 +20,24 @@ class Profile:
     
     def __setstate__(self, state):
         self._name, self._mappings = state
-        self._controller = CustomBluetoothController()
+        self._controller = DabbleGamepadBluetoothController()
         self._mappingQueue = Queue()
         self._waiting_for_packet = False
-
+    
+    def cleanup(self):
+        self._controller.cleanup()
 
     def update(self):
         packet = 'a'
         if not self._waiting_for_packet:
+            packet = self._controller.readPacket()
             while len(packet) != 0:
-                packet = self._controller.readPacket()
 
                 for map in self._mappings:
                     if map.validateInput(packet):
                         self._mappingQueue.put(map)
+                
+                packet = self._controller.readPacket()
         
     
     def mapNextInputToProfile(self, action: Action, component: Component):
