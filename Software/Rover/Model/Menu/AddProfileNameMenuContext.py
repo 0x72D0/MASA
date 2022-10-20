@@ -27,6 +27,7 @@ class AddProfileNameMenuContext(IMenuContext):
         # protection if we go back to this state
         if self._isFinished:
             menuStack.pop()
+            return
         
         accept = buttonHandle.get_rotaryEncoderButtonState()
         back = buttonHandle.backButtonCallback()
