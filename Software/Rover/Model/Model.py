@@ -60,6 +60,9 @@ class Model:
     def setCurrentProfileName(self, name: str):
         self._currentProfileName = name
     
+    def deleteProfileName(self, name: str):
+        self._profileDatabase.deleteProfile(name)
+    
     def get_profileNameList(self) -> list:
         return self._profileDatabase.get_profilesName()
     

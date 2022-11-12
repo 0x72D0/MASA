@@ -2,28 +2,32 @@ from Model.Menu.AddProfileNameMenuContext import AddProfileNameMenuContext
 from Model.Menu.MenuStack import MenuStack
 from Model.Menu.MenuType import MenuType
 from Model.Menu.ProfileConfigContext import ProfileConfigContext
-from Model.Menu.ProfileOptionMenuContext import ProfileOptionMenuContext
 from Model.Model import Model
 from Model.Menu.IMenuContext import IMenuContext
 from Controller.ButtonController import ButtonController
 from Controller.RotaryEncoderController import RotaryEncoderController
 
 
-class ProfileMenuContext(IMenuContext):
+class ProfileOptionMenuContext(IMenuContext):
     """Menu that decide what profile the user gonna use."""
-    def __init__(self, model: Model) -> None:
-        self._profile_list = [u'New profile']
+    def __init__(self, model: Model, selectedProfile: str) -> None:
+        self._currentSelectedProfile = selectedProfile
+        self._go_back = False
         super().__init__(model)
     
     def get_menuStructure(self) -> tuple:
-        return MenuType.LIST, self._profile_list
+        return MenuType.LIST, [u'Select >', u'Modify >', u'Delete >']
+    
+    def go_back(self):
+        self._go_back = True
 
     def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
-        self._handleListMenuIndex(encoderHandle, len(self._model.get_profileNameList()))
 
-        self._profile_list = [u'New profile']
-        for profile in self._model.get_profileNameList():
-            self._profile_list.append(profile)
+        if(self._go_back):
+            menuStack.pop()
+            return
+
+        self._handleListMenuIndex(encoderHandle, 2)
         
         # manage the menu Accept button
         acceptButtonState = buttonHandle.get_rotaryEncoderButtonState()
@@ -31,9 +35,14 @@ class ProfileMenuContext(IMenuContext):
 
         if acceptButtonState == 1:
             if self._currentIndex == 0:
-                menuStack.add(AddProfileNameMenuContext(self._model))
-            else:
-                menuStack.add(ProfileOptionMenuContext(self._model, self._profile_list[self._currentIndex]))
-        
+                self._model.setCurrentProfileName(self._currentSelectedProfile)
+                menuStack.pop()
+            if self._currentIndex == 1:
+                self._model.setCurrentProfileName(self._currentSelectedProfile)
+                menuStack.add(ProfileConfigContext(self._model))
+            if self._currentIndex == 2:
+                self._model.deleteProfileName(self._currentSelectedProfile)
+                menuStack.pop()
+                
         if backButtonState == 1:
             menuStack.pop()

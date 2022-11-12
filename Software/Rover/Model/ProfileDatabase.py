@@ -32,5 +32,11 @@ class ProfileDatabase:
         with open(ProfileDatabase.PROFILE_FILENAME, "wb") as fd:
             pickle.dump(self._profiles, fd)
     
+    def deleteProfile(self, name: str):
+        for profile in self._profiles:
+            if profile.get_name() == name:
+                self._profiles.remove(profile)
+                return
+    
     def newProfile(self, name: str):
         self._profiles.append(Profile(name))
