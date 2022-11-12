@@ -4,6 +4,8 @@ from Model.Action import Action
 from Model.ActionType import ActionType
 from Model.Component import Component
 from Model.ComponentType import ComponentType
+from Model.Menu.ChooseComponentMenuContext import ChooseComponentMenuContext
+from Model.Menu.ChooseComponentMenuContext2 import ChooseComponentMenuContext2
 from Model.Menu.IMenuContext import IMenuContext
 from Model.Menu.MappingMenuContext import MappingMenuContext
 from Model.Menu.MenuStack import MenuStack
@@ -38,6 +40,7 @@ class ProfileConfigContext(IMenuContext):
                 component.set_type(ComponentType.SERVO_MOTOR)
                 nextContext = MappingMenuContext(self._model, 
                 [
+                    ChooseComponentMenuContext(self._model, action, component),
                     AddNumberArgumentsMenuContext(self._model, action, component, u'servo angle', 150, 0),
                     WaitingInputMenuContext(self._model, action, component)
                 ])
@@ -49,6 +52,7 @@ class ProfileConfigContext(IMenuContext):
                 component2 = Component()
                 action2.set_actionType(ActionType.RELEASE_OFF)
                 component2.set_type(ComponentType.SERVO_MOTOR)
+                component2.set_position(component.get_position())
                 nextContext2 = MappingMenuContext(self._model, 
                 [
                     WaitingInputMenuContext(self._model, action2, component2)
@@ -58,6 +62,7 @@ class ProfileConfigContext(IMenuContext):
                 component1.set_type(ComponentType.SERVO_MOTOR)
                 nextContext1 = MappingMenuContext(self._model, 
                 [
+                    ChooseComponentMenuContext2(self._model, action, component, component2),
                     AddNumberArgumentsMenuContext(self._model, action1, component1, u'servo angle', 150, 0),
                     WaitingInputMenuContext(self._model, action1, component1)
                 ])
@@ -69,6 +74,7 @@ class ProfileConfigContext(IMenuContext):
                 component.set_type(ComponentType.SERVO_MOTOR)
                 nextContext = MappingMenuContext(self._model, 
                 [
+                    ChooseComponentMenuContext(self._model, action, component),
                     AddNumberArgumentsMenuContext(self._model, action, component, u'servo angle', 150, -150),
                     WaitingInputMenuContext(self._model, action, component)
                 ])
@@ -81,6 +87,7 @@ class ProfileConfigContext(IMenuContext):
                 action.addArgument(0)
                 nextContext = MappingMenuContext(self._model, 
                 [
+                    ChooseComponentMenuContext(self._model, action, component),
                     AddNumberArgumentsMenuContext(self._model, action, component, u'servo angle', 150, 0),
                     AnalogicInputMenuContext(self._model, action, component)
                 ])

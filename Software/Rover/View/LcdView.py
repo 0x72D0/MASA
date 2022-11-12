@@ -20,6 +20,7 @@ class LcdView:
         self._lastSubPage = 0
 
         self.SELECT_ARROW_CHAR = ( 0b00000, 0b00100, 0b00110, 0b11111, 0b11111, 0b00110, 0b00100, 0b00000 )
+        self.UP_ARROW_CHAR = ( 0b00100, 0b01110, 0b11111, 0b00100, 0b00100, 0b00100, 0b00100, 0b00000 )
 
         self._loadingMenuChar()
         self._lcd.clear()
@@ -43,6 +44,9 @@ class LcdView:
         
         if currentMenuType == MenuType.INPUT_CHAR:
             self._drawInputChar(args)
+        
+        if currentMenuType == MenuType.COMPONENT_LIST:
+            self._drawComponentList(currentCursor, args)
     
     def _drawList(self, cursorPos, args: list):
         currentSubPage = cursorPos // self.ROW
@@ -94,8 +98,27 @@ class LcdView:
         self._lcd.write_string(u'\x00')
 
         self._currentCursorPos = position
+    
+    def _drawComponentList(self, cursorPos, args: list):
+        self._lcd.cursor_pos = (0,0)
+        self._lcd.write_string("Choose Component:")
+        
+        for i in range(args[0]):
+            self._lcd.cursor_pos = (1,i*2)
+            self._lcd.write_string(" " + str(i))
+        
+        # drawing cursor
+        if cursorPos != self._currentCursorPos:
+            self._lcd.cursor_pos = (2, (self._currentCursorPos*2)+1)
+            self._lcd.write_string(u" ")
+
+            self._lcd.cursor_pos = (2, (cursorPos*2)+1)
+            self._lcd.write_string(u'\x01')
+
+            self._currentCursorPos = cursorPos
 
     def _loadingMenuChar(self):
         self._lcd.create_char(0, self.SELECT_ARROW_CHAR)
+        self._lcd.create_char(1, self.UP_ARROW_CHAR)
     
         

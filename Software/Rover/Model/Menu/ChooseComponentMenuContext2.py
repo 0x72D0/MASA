@@ -8,17 +8,18 @@ from Model.Menu.MenuType import MenuType
 from Model.Model import Model
 
 
-class ChooseComponentMenuContext(IMenuContext):
+class ChooseComponentMenuContext2(IMenuContext):
     """Menu Context that ask the user to input a number"""
-    def __init__(self, model: Model, action: Action, component: Component) -> None:
+    def __init__(self, model: Model, action: Action, component1: Component, component2: Component) -> None:
         self._action = action
-        self._component = component
-        self._max = model.get_servoNum()-1
+        self._component1 = component1
+        self._component2 = component2
+        self._max = self._model.get_ServoNum()-1
         self._min = 0
         super().__init__(model)
     
     def get_menuStructure(self) -> tuple:
-        return MenuType.COMPONENT_LIST, [self._model.get_servoNum()]
+        return MenuType.COMPONENT_LIST, [self._model.get_ServoNum()]
 
     def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
         accept = buttonHandle.get_rotaryEncoderButtonState()
@@ -33,7 +34,8 @@ class ChooseComponentMenuContext(IMenuContext):
             self._currentIndex = self._max
 
         if accept == 1:
-            self._component.set_position(self._currentIndex)
+            self._component1.set_position(self._currentIndex)
+            self._component2.set_position(self._currentIndex)
             menuStack.pop()
         
         if back == 1:
