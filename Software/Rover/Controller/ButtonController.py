@@ -1,5 +1,5 @@
 import time
-import Pinout
+import HardwareMapping
 
 from RPi import GPIO
 
@@ -12,10 +12,10 @@ class ButtonController():
     __debouncingSeconds = 2
 
     def __init__(self):
-        GPIO.setup(Pinout.ROTARY_ENCODER_SW_PIN, GPIO.IN)
-        GPIO.add_event_detect(Pinout.ROTARY_ENCODER_SW_PIN, GPIO.BOTH, callback=ButtonController.rotaryEncoderSwCallback)
-        GPIO.setup(Pinout.BACK_BUTTON_PIN, GPIO.IN)
-        GPIO.add_event_detect(Pinout.BACK_BUTTON_PIN, GPIO.BOTH, callback=ButtonController.backButtonCallback)
+        GPIO.setup(HardwareMapping.ROTARY_ENCODER_SW_PIN, GPIO.IN)
+        GPIO.add_event_detect(HardwareMapping.ROTARY_ENCODER_SW_PIN, GPIO.BOTH, callback=ButtonController.rotaryEncoderSwCallback)
+        GPIO.setup(HardwareMapping.BACK_BUTTON_PIN, GPIO.IN)
+        GPIO.add_event_detect(HardwareMapping.BACK_BUTTON_PIN, GPIO.BOTH, callback=ButtonController.backButtonCallback)
 
     def get_rotaryEncoderButtonState(self):
         tempState = ButtonController.__rotaryEncoderSwState
@@ -30,13 +30,13 @@ class ButtonController():
     def rotaryEncoderSwCallback(channel):
         # if there's a falling edge
         if time.time() - ButtonController.__rotaryEncoderLastTime > ButtonController.__debouncingSeconds:
-            if not GPIO.input(Pinout.ROTARY_ENCODER_SW_PIN):
+            if not GPIO.input(HardwareMapping.ROTARY_ENCODER_SW_PIN):
                 ButtonController.__rotaryEncoderSwState = 1
                 ButtonController.__rotaryEncoderLastTime = time.time()
 
     def backButtonCallback(channel):
         # if there's a falling edge
         if time.time() - ButtonController.__backButtonLastTime > ButtonController.__debouncingSeconds:
-            if not GPIO.input(Pinout.BACK_BUTTON_PIN):
+            if not GPIO.input(HardwareMapping.BACK_BUTTON_PIN):
                 ButtonController.__backButtonState = 1
                 ButtonController.__backButtonLastTime = time.time()

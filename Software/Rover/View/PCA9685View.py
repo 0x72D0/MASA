@@ -1,3 +1,5 @@
+import HardwareMapping
+
 from smbus2 import SMBus
 
 from Model.Model import Model
@@ -5,7 +7,7 @@ from Model.Model import Model
 class PCA9685View():
     """Class that control the PCA9685."""
     def __init__(self, model: Model):
-        self._addr = 0x41
+        self._addr = HardwareMapping.PCA_0_ADDR
         self._model = model
         self._i2cBus = SMBus(1)
 
@@ -17,7 +19,7 @@ class PCA9685View():
         self._i2cBus.write_byte_data(self._addr, 0, 0b00000001)
     
     def update(self):
-        angleList = self._model.getServosAngle()
+        angleList = self._model.get_servosAngle()
 
         self.writeAngle(15, angleList[0])
     

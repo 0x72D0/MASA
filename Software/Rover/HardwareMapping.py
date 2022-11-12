@@ -12,3 +12,7 @@ LCD_D1_PIN=16
 LCD_D2_PIN=11
 LCD_D3_PIN=12
 LCD_D4_PIN=15
+
+# contains I2C addressing
+
+PCA_0_ADDR = 0x41
