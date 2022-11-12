@@ -1,3 +1,5 @@
+# This encoder was taken from: https://github.com/nstansby/rpi-rotary-encoder-python
+
 # Class to monitor a rotary encoder and update a value.  You can either read the value when you need it, by calling getValue(), or
 # you can configure a callback which will be called whenever the value changes.
 

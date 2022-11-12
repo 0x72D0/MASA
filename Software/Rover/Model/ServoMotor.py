@@ -31,6 +31,16 @@ class ServoMotor:
             elif action.get_actionType() == ActionType.STEP:
                 print("servo STEP")
                 self._currentAngle += action.get_actionArguments()[0]
+
+            elif action.get_actionType() == ActionType.ANALOG:
+                print("servo ANALOG")
+                args = action.get_actionArguments()
+                # first argument is the type of analog control
+                if args[0] == 0:
+                    if args[2] >= 0:
+                        self._currentAngle = (args[2]/255)*args[1]
+                    else:
+                        self._currentAngle = 0
             
         elif self._currentState == ServoState.TOGGLE_ON:
             if action.get_actionType() == ActionType.TOGGLE:

@@ -15,10 +15,6 @@ class MenuStack:
     def pop(self):
         self._needScreenRefresh = True
         self._stack.pop()
-    
-    def pop_recursive(self):
-        self._needScreenRefresh = True
-        self._stack.pop()
         self._stack[-1].go_back()
     
     def needScreenRefresh(self):

@@ -38,5 +38,5 @@ class AddNumberArgumentsMenuContext(IMenuContext):
             menuStack.pop()
         
         if back == 1:
-            menuStack.pop_recursive()
+            menuStack.pop()
             

@@ -1,4 +1,5 @@
 from queue import Queue
+import copy
 
 from Controller.DabbleGamepadBluetoothController import DabbleGamepadBluetoothController
 from Model.Action import Action
@@ -33,9 +34,21 @@ class Profile:
             packet = self._controller.readPacket()
             while len(packet) != 0:
 
+                packet_found = False
+
                 for map in self._mappings:
                     if map.validateInput(packet):
+                        packet_found = True
                         self._mappingQueue.put(map)
+                
+                #check for analogic change
+                if(not packet_found):
+                    if map.isAnalogicInput(packet):
+                        #Creating a deep copy in order to set the argument to the analogic input
+                        analogMap = copy.deepcopy(map)
+                        analogMap.add_argument(int(packet[-1]))
+                        print(analogMap.get_action().get_actionArguments())
+                        self._mappingQueue.put(analogMap)
                 
                 packet = self._controller.readPacket()
         
@@ -47,11 +60,29 @@ class Profile:
         if len(packet) == 0:
             return False
         
+        # if the mapping already exist, remove it
         for i in range(len(self._mappings)):
             if self._mappings[i].get_componentType() == component.get_type():
                 if self._mappings[i].get_componentPosition() == component.get_position():
                     if self._mappings[i].get_action().get_actionType() == action.get_actionType():
                         self._mappings.pop(i)
+
+        self._mappings.append(Mapping(action, packet, component))
+        print("mapping " + str(packet))
+
+        self._waiting_for_packet = False
+
+        return True
+    
+    def mapAnalogicInputToProfile(self, action: Action, component: Component):
+        self._waiting_for_packet = True
+        packet = self._controller.readPacket()
+
+        if len(packet) == 0:
+            return False
+        
+        if packet[-1] == chr(0):
+            return False
 
         self._mappings.append(Mapping(action, packet, component))
         print("mapping " + str(packet))

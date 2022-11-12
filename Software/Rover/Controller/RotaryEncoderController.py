@@ -1,5 +1,5 @@
 import Pinout
-from Controller.RotaryEncoder.encoder import Encoder
+from Controller.encoder import Encoder
 
 class RotaryEncoderController():
     """Control the Rotary Encoder input."""

@@ -23,7 +23,16 @@ class Mapping:
     def get_action(self):
         return self._action
     
+    def add_argument(self, arg):
+        self._action.addArgument(arg)
+    
     def validateInput(self, input) -> bool:
-        if input == self._input:
+        # don't check the last byte since it's the analogic input
+        if input[:-1] == self._input[:-1] and self.isAnalogicInput(input) == False:
+            return True
+        return False
+    
+    def isAnalogicInput(self, input):
+        if input[-1] is not chr(0) and self._action.isAnalogic():
             return True
         return False

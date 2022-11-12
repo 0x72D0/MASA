@@ -35,6 +35,13 @@ class Model:
         
         return profile.mapNextInputToProfile(action, component)
     
+    def mapAnalogicInputToProfile(self, action: Action, component:Component) -> bool:
+        profile = self._profileDatabase.get_profile(self._currentProfileName)
+        if profile is None:
+            return False
+        
+        return profile.mapNextInputToProfile(action, component)
+    
     def setCurrentProfileName(self, name: str):
         self._currentProfileName = name
     

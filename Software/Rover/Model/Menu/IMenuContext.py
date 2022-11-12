@@ -28,3 +28,6 @@ class IMenuContext:
 
     def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
         pass
+
+    def go_back(self):
+        pass

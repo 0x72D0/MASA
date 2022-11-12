@@ -38,6 +38,18 @@ class DabbleGamepadBluetoothController(IController):
     def cleanup(self):
         self._serial.close()
     
+    def translate_packet(self):
+        intensity = self._packet[-1] & 0x07
+        rotation = self._packet[-1] >> 3
+        if(rotation >= 0b101 or rotation <= 0b111):
+            self._packet[-1] = int(((intensity/0x07)*127)+128)
+        elif(rotation >= 0b10001 or rotation <= 0b10011):
+            self._packet[-1] = int((intensity/0x07)*127)
+        elif(rotation == 0 and intensity == 0):
+            self._packet[-1] = 128
+        else:
+            self._packet[-1] = 0
+    
     def readPacket(self):
         data = "a"
 
@@ -87,6 +99,7 @@ class DabbleGamepadBluetoothController(IController):
                 if data == b'\x00':
                     print("-----FRAME END-----")
                     self._state = com_state.START_OF_FRAME
+                    self.translate_packet()
                     return bytes(self._packet)
                 else:
                     print("error in frame end: " + str(data))

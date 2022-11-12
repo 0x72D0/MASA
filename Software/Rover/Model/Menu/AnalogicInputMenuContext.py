@@ -10,7 +10,7 @@ from Controller.ButtonController import ButtonController
 from Controller.RotaryEncoderController import RotaryEncoderController
 
 
-class WaitingInputMenuContext(IMenuContext):
+class AnalogicInputMenuContext(IMenuContext):
     """Menu Context for the waiting input menu context."""
     def __init__(self, model: Model, action: Action, component: Component) -> None:
         self._action = action
@@ -18,14 +18,14 @@ class WaitingInputMenuContext(IMenuContext):
         super().__init__(model)
     
     def get_menuStructure(self) -> tuple:
-        return MenuType.STILL_MESSAGE, [u'waiting for input']
+        return MenuType.STILL_MESSAGE, [u'waiting for analogic']
 
     def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
 
         accept = buttonHandle.get_rotaryEncoderButtonState()
         back = buttonHandle.backButtonCallback()
         
-        if self._model.mapNextInputToProfile(self._action, self._component):
+        if self._model.mapAnalogicInputToProfile(self._action, self._component):
             menuStack.pop()
         
         if back == 1:

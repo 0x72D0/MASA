@@ -19,3 +19,8 @@ class Action:
     
     def get_actionArguments(self):
         return self._actionArguments
+    
+    def isAnalogic(self):
+        if self._actionType == ActionType.ANALOG:
+            return True
+        return False
