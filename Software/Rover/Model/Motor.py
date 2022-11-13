@@ -54,5 +54,5 @@ class Motor:
                 self._currentSpeed = 0
                 self._currentState = MotorState.INIT
     
-    def getAngle(self):
+    def getSpeed(self):
         return self._currentSpeed

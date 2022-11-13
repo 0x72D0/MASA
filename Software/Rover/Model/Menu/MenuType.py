@@ -8,4 +8,5 @@ class MenuType(Enum):
     NUMBER_ARGUMENT = 3
     INPUT_CHAR = 4
     COMPONENT_LIST = 5
+    MONITOR = 6
     

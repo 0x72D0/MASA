@@ -54,5 +54,5 @@ class StepperMotor:
                 self._currentStep = 0
                 self._currentState = StepperState.INIT
     
-    def getAngle(self):
+    def getStep(self):
         return self._currentStep

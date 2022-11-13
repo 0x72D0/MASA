@@ -17,9 +17,9 @@ class Model:
         self._profileDatabase = ProfileDatabase()
         self._currentProfileName = ""
 
-        self._servos = [Motor()] * self.MOTOR_NUM
-        self._servos = [ServoMotor()] * self.SERVO_NUM
-        self._servos = [StepperMotor()] * self.STEPPER_NUM
+        self._servos = [ServoMotor()] * self.MOTOR_NUM
+        self._motors = [Motor()] * self.SERVO_NUM
+        self._stepper = [StepperMotor()] * self.STEPPER_NUM
     
     def cleanup(self):
         if self._profileDatabase.get_profile(self._currentProfileName) != None:
@@ -33,6 +33,15 @@ class Model:
     
     def get_motorNum(self):
         return self.MOTOR_NUM
+    
+    def get_servoComponent(self, position: int):
+        return self._servos[position]
+    
+    def get_stepperComponent(self, position: int):
+        return self._stepper[position]
+    
+    def get_motorComponent(self, position: int):
+        return self._motors[position]
 
     def get_servosAngle(self) -> list:
         tempList = []

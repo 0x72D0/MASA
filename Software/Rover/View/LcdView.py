@@ -1,3 +1,4 @@
+from Model.ComponentType import ComponentType
 from Model.Menu.Menu import Menu
 from Model.Model import Model
 from RPLCD import CharLCD
@@ -21,6 +22,7 @@ class LcdView:
 
         self.SELECT_ARROW_CHAR = ( 0b00000, 0b00100, 0b00110, 0b11111, 0b11111, 0b00110, 0b00100, 0b00000 )
         self.UP_ARROW_CHAR = ( 0b00100, 0b01110, 0b11111, 0b00100, 0b00100, 0b00100, 0b00100, 0b00000 )
+        self.CHECK_MARK = ( 0b00000, 0b00000, 0b00000, 0b00000, 0b00001, 0b00010, 0b10100, 0b01000 )
 
         self._loadingMenuChar()
         self._lcd.clear()
@@ -47,6 +49,9 @@ class LcdView:
         
         if currentMenuType == MenuType.COMPONENT_LIST:
             self._drawComponentList(currentCursor, args)
+        
+        if currentMenuType == MenuType.MONITOR:
+            self._drawMonitor(args)
     
     def _drawList(self, cursorPos, args: list):
         currentSubPage = cursorPos // self.ROW
@@ -116,9 +121,32 @@ class LcdView:
             self._lcd.write_string(u'\x01')
 
             self._currentCursorPos = cursorPos
+    
+    def _drawMonitor(self, args: list):
+        if(len(args) >= 3):
+            self._lcd.cursor_pos = (0,0)
+            self._lcd.write_string(self._writeMonitorString(args[0], args[1], args[2]))
+        if(len(args) >= 6):
+            self._lcd.cursor_pos = (1,0)
+            self._lcd.write_string(self._writeMonitorString(args[3], args[4], args[5]))
+        if(len(args) >= 9):
+            self._lcd.cursor_pos = (2,0)
+            self._lcd.write_string(self._writeMonitorString(args[6], args[7], args[8]))
+        if(len(args) >= 12):
+            self._lcd.cursor_pos = (3,0)
+            self._lcd.write_string(self._writeMonitorString(args[9], args[10], args[11]))
+
+    def _writeMonitorString(self, componentType: ComponentType, position: int , data: int):
+        if componentType == ComponentType.SERVO_MOTOR:
+            return "servo " + str(position) + ": " + str(data).rjust(3, "0") + " deg"
+        if componentType == ComponentType.DC_MOTOR:
+            return "motor " + str(position) + ": " + str(data).rjust(3, "0") + " %"
+        if componentType == ComponentType.STEPPER:
+            return "stepper " + str(position) + ": " + str(data).rjust(3, "0") + " step"
 
     def _loadingMenuChar(self):
         self._lcd.create_char(0, self.SELECT_ARROW_CHAR)
         self._lcd.create_char(1, self.UP_ARROW_CHAR)
+        self._lcd.create_char(2, self.CHECK_MARK)
     
         
