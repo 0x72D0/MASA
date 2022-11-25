@@ -1,7 +1,6 @@
 from Model.Action import Action
-from Model.ActionType import ActionType
+from Model.Action import ActionType
 from Model.Component import Component
-from Model.ComponentType import ComponentType
 from Model.Menu.MenuStack import MenuStack
 from Model.Menu.MenuType import MenuType
 from Model.Model import Model
@@ -20,7 +19,7 @@ class AnalogicInputMenuContext(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.STILL_MESSAGE, [u'waiting for analogic']
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
 
         accept = buttonHandle.get_rotaryEncoderButtonState()
         back = buttonHandle.backButtonCallback()

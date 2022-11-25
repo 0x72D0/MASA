@@ -2,6 +2,7 @@ from enum import Enum
 import serial
 
 from Controller.IController import IController
+from Model.ControllerEvent import ControllerEvent, EventType
 
 class com_state(Enum):
     START_OF_FRAME = 0
@@ -25,6 +26,7 @@ class DabbleGamepadBluetoothController(IController):
         self._max_i = 0
         self._max_j = 0
         self._packet = bytearray()
+        self._lastByteArray = bytearray()
 
     def __init__(self):
         self._serial = serial.Serial(port='/dev/serial0', baudrate = 9600, timeout=0.1)
@@ -34,23 +36,38 @@ class DabbleGamepadBluetoothController(IController):
         self._max_i = 0
         self._max_j = 0
         self._packet = bytearray()
+        self._lastByteArray = bytearray()
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         self._serial.close()
     
-    def translate_packet(self):
+    def translate_packet(self) -> ControllerEvent:
+        byteArray = bytearray()
+
+        # if it was a digital input, detect it.
+        byteArray.append(self._packet[-2])
+
+        if(self._lastByteArray != byteArray):
+            self._lastByteArray = byteArray
+            return ControllerEvent(EventType.DIGITAL, bytes(byteArray))
+        
+        # if not it's a analogic input
+        byteArray.clear()    
         intensity = self._packet[-1] & 0x07
         rotation = self._packet[-1] >> 3
-        if(rotation >= 0b101 or rotation <= 0b111):
-            self._packet[-1] = int(((intensity/0x07)*127)+128)
-        elif(rotation >= 0b10001 or rotation <= 0b10011):
-            self._packet[-1] = int((intensity/0x07)*127)
+
+        if(rotation >= 0b00100 and rotation <= 0b01000):
+            byteArray.append(int(((intensity/0x07)*127)+128))
+        elif(rotation >= 0b10000 and rotation <= 0b10100):
+            byteArray.append(int(127-((intensity/0x06)*127)))
         elif(rotation == 0 and intensity == 0):
-            self._packet[-1] = 128
+            byteArray.append(128)
         else:
-            self._packet[-1] = 0
+            byteArray.append(0)
+        
+        return ControllerEvent(EventType.ANALOG, bytes(byteArray))
     
-    def readPacket(self):
+    def readPacket(self) -> ControllerEvent:
         data = "a"
 
         while data != b'':
@@ -99,10 +116,9 @@ class DabbleGamepadBluetoothController(IController):
                 if data == b'\x00':
                     print("-----FRAME END-----")
                     self._state = com_state.START_OF_FRAME
-                    self.translate_packet()
-                    return bytes(self._packet)
+                    return self.translate_packet()
                 else:
                     print("error in frame end: " + str(data))
                     self._state = com_state.START_OF_FRAME
             
-        return b''
+        return ControllerEvent(EventType.EMPTY, b'')

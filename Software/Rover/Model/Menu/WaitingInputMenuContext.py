@@ -1,7 +1,7 @@
 from Model.Action import Action
-from Model.ActionType import ActionType
+from Model.Action import ActionType
 from Model.Component import Component
-from Model.ComponentType import ComponentType
+from Model.Component import ComponentType
 from Model.Menu.MenuStack import MenuStack
 from Model.Menu.MenuType import MenuType
 from Model.Model import Model
@@ -20,12 +20,12 @@ class WaitingInputMenuContext(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.STILL_MESSAGE, [u'waiting for input']
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack)-> None:
 
         accept = buttonHandle.get_rotaryEncoderButtonState()
         back = buttonHandle.backButtonCallback()
         
-        if self._model.mapNextInputToProfile(self._action, self._component):
+        if self._model.mapDigitalInputToProfile(self._action, self._component):
             menuStack.pop()
         
         if back == 1:

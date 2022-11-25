@@ -15,13 +15,13 @@ class Menu:
     def get_currentMenuType(self) -> tuple:
         return self._menuStack.get_top().get_menuStructure()
 
-    def needScreenRefresh(self):
+    def needScreenRefresh(self) -> bool:
         return self._menuStack.needScreenRefresh()
     
     def get_currentIndex(self) -> int:
         return self._menuStack.get_top().get_currentIndex()
     
-    def update(self):
+    def update(self) -> None:
         # manage the context
         # here's the menu is a state machine design pattern
         self._menuStack.get_top().update(self._encoder, self._button, self._menuStack)

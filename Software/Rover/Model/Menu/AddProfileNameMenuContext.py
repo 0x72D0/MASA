@@ -23,7 +23,7 @@ class AddProfileNameMenuContext(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.INPUT_CHAR, [self._message]
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
         # protection if we go back to this state
         if self._isFinished:
             menuStack.pop()

@@ -1,6 +1,6 @@
 from Model.Action import Action
 from Model.Component import Component
-from Model.ComponentType import ComponentType
+from Model.Component import ComponentType
 from Model.Profile import Profile
 from Model.ProfileDatabase import ProfileDatabase
 from Model.ServoMotor import ServoMotor
@@ -21,26 +21,26 @@ class Model:
         self._motors = [Motor()] * self.SERVO_NUM
         self._stepper = [StepperMotor()] * self.STEPPER_NUM
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         if self._profileDatabase.get_profile(self._currentProfileName) != None:
             self._profileDatabase.get_profile(self._currentProfileName).cleanup()
     
-    def get_servoNum(self):
+    def get_servoNum(self) -> int:
         return self.SERVO_NUM
     
-    def get_stepperNum(self):
+    def get_stepperNum(self) -> int:
         return self.STEPPER_NUM
     
-    def get_motorNum(self):
+    def get_motorNum(self) -> int:
         return self.MOTOR_NUM
     
-    def get_servoComponent(self, position: int):
+    def get_servoComponent(self, position: int) -> ServoMotor:
         return self._servos[position]
     
-    def get_stepperComponent(self, position: int):
+    def get_stepperComponent(self, position: int) -> StepperMotor:
         return self._stepper[position]
     
-    def get_motorComponent(self, position: int):
+    def get_motorComponent(self, position: int) -> Motor:
         return self._motors[position]
 
     def get_servosAngle(self) -> list:
@@ -49,33 +49,35 @@ class Model:
             tempList.append(servo.getAngle())
         return tempList
     
-    def startNewProfile(self, name: str):
+    def startNewProfile(self, name: str) -> None:
         self._profileDatabase.newProfile(name)
 
-    def mapNextInputToProfile(self, action: Action, component:Component) -> bool:
+    def mapDigitalInputToProfile(self, action: Action, component:Component) -> bool:
         profile = self._profileDatabase.get_profile(self._currentProfileName)
+        
         if profile is None:
             return False
         
-        return profile.mapNextInputToProfile(action, component)
+        return profile.mapDigitalInputToProfile(action, component)
     
     def mapAnalogicInputToProfile(self, action: Action, component:Component) -> bool:
         profile = self._profileDatabase.get_profile(self._currentProfileName)
+
         if profile is None:
             return False
         
-        return profile.mapNextInputToProfile(action, component)
+        return profile.mapAnalogicInputToProfile(action, component)
     
-    def setCurrentProfileName(self, name: str):
+    def setCurrentProfileName(self, name: str) -> None:
         self._currentProfileName = name
     
-    def deleteProfileName(self, name: str):
+    def deleteProfileName(self, name: str) -> None:
         self._profileDatabase.deleteProfile(name)
     
     def get_profileNameList(self) -> list:
         return self._profileDatabase.get_profilesName()
     
-    def update(self):
+    def update(self) -> None:
         self._profileDatabase.save_profiles()
         profile = self._profileDatabase.get_profile(self._currentProfileName)
         if profile is not None:

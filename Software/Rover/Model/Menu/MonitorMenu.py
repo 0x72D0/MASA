@@ -1,6 +1,6 @@
 from Model.Action import Action
 from Model.Component import Component
-from Model.ComponentType import ComponentType
+from Model.Component import ComponentType
 from Model.Menu.MenuStack import MenuStack
 from Model.Menu.MenuType import MenuType
 from Model.Model import Model
@@ -18,7 +18,7 @@ class MonitorMenu(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.MONITOR, self._monitorElement   
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
         self._monitorElement = []
 
         # search for Servo

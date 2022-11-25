@@ -4,6 +4,7 @@ import copy
 from Controller.DabbleGamepadBluetoothController import DabbleGamepadBluetoothController
 from Model.Action import Action
 from Model.Component import Component
+from Model.ControllerEvent import EventType
 from Model.Mapping import Mapping
 
 
@@ -25,39 +26,36 @@ class Profile:
         self._mappingQueue = Queue()
         self._waiting_for_packet = False
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         self._controller.cleanup()
 
-    def update(self):
+    def update(self) -> None:
         packet = 'a'
         if not self._waiting_for_packet:
             packet = self._controller.readPacket()
-            while len(packet) != 0:
 
-                packet_found = False
-
+            if packet.compareEventType(EventType.EMPTY):
+                return
+            
+            elif packet.compareEventType(EventType.DIGITAL):
                 for map in self._mappings:
-                    if map.validateInput(packet):
-                        packet_found = True
+                    if (not map.isAnalogicInput()) and map.validateInput(str(packet.get_event())):
                         self._mappingQueue.put(map)
-                
-                #check for analogic change
-                if(not packet_found):
-                    if map.isAnalogicInput(packet):
-                        #Creating a deep copy in order to set the argument to the analogic input
+            
+            elif packet.compareEventType(EventType.ANALOG):
+                for map in self._mappings:
+                    if map.isAnalogicInput():
                         analogMap = copy.deepcopy(map)
-                        analogMap.add_argument(int(packet[-1]))
+                        analogMap.add_argument(int(packet.get_event()[0]))
                         print(analogMap.get_action().get_actionArguments())
                         self._mappingQueue.put(analogMap)
-                
-                packet = self._controller.readPacket()
         
     
-    def mapNextInputToProfile(self, action: Action, component: Component):
+    def mapDigitalInputToProfile(self, action: Action, component: Component) -> bool:
         self._waiting_for_packet = True
         packet = self._controller.readPacket()
 
-        if len(packet) == 0:
+        if not packet.compareEventType(EventType.DIGITAL):
             return False
         
         # if the mapping already exist, remove it
@@ -67,25 +65,21 @@ class Profile:
                     if self._mappings[i].get_action().get_actionType() == action.get_actionType():
                         self._mappings.pop(i)
 
-        self._mappings.append(Mapping(action, packet, component))
-        print("mapping " + str(packet))
+        self._mappings.append(Mapping(action, str(packet.get_event()), component))
+        print("mapping " + str(packet.get_event()))
 
         self._waiting_for_packet = False
-
         return True
     
-    def mapAnalogicInputToProfile(self, action: Action, component: Component):
+    def mapAnalogicInputToProfile(self, action: Action, component: Component) -> bool:
         self._waiting_for_packet = True
         packet = self._controller.readPacket()
 
-        if len(packet) == 0:
-            return False
-        
-        if packet[-1] == chr(0):
+        if not packet.compareEventType(EventType.ANALOG):
             return False
 
-        self._mappings.append(Mapping(action, packet, component))
-        print("mapping " + str(packet))
+        self._mappings.append(Mapping(action, str(packet.get_event()), component))
+        print("mapping " + str(packet.get_event()))
 
         self._waiting_for_packet = False
 

@@ -21,7 +21,7 @@ class ProfileOptionMenuContext(IMenuContext):
     def go_back(self):
         self._go_back = True
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack)-> None:
 
         if(self._go_back):
             menuStack.pop()

@@ -28,15 +28,15 @@ class ProfileDatabase:
     def get_profileLen(self) -> int:
         return len(self._profiles)
     
-    def save_profiles(self):
+    def save_profiles(self) -> None:
         with open(ProfileDatabase.PROFILE_FILENAME, "wb") as fd:
             pickle.dump(self._profiles, fd)
     
-    def deleteProfile(self, name: str):
+    def deleteProfile(self, name: str) -> None:
         for profile in self._profiles:
             if profile.get_name() == name:
                 self._profiles.remove(profile)
                 return
     
-    def newProfile(self, name: str):
+    def newProfile(self, name: str) -> None:
         self._profiles.append(Profile(name))

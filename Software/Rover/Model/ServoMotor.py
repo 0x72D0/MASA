@@ -1,6 +1,6 @@
 from typing import Mapping
 from Model.Action import Action
-from Model.ActionType import ActionType
+from Model.Action import ActionType
 
 from enum import Enum
 
@@ -54,6 +54,6 @@ class ServoMotor:
                 self._currentAngle = 0
                 self._currentState = ServoState.INIT
     
-    def getAngle(self):
+    def getAngle(self) -> int:
         return self._currentAngle
 

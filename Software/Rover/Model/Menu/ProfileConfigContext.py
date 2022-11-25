@@ -1,9 +1,9 @@
 from Controller.ButtonController import ButtonController
 from Controller.RotaryEncoderController import RotaryEncoderController
 from Model.Action import Action
-from Model.ActionType import ActionType
+from Model.Action import ActionType
 from Model.Component import Component
-from Model.ComponentType import ComponentType
+from Model.Component import ComponentType
 from Model.Menu.ChooseComponentMenuContext import ChooseComponentMenuContext
 from Model.Menu.ChooseComponentMenuContext2 import ChooseComponentMenuContext2
 from Model.Menu.IMenuContext import IMenuContext
@@ -25,7 +25,7 @@ class ProfileConfigContext(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.LIST, [u'servo toggle', u'servo release', u'servo stepping', u'servo analogic']
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack)-> None:
         self._handleListMenuIndex(encoderHandle, self._MAX_INDEX)
         
         # manage the menu Accept button

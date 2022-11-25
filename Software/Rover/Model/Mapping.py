@@ -1,4 +1,5 @@
 from Model.Component import Component
+from Model.Component import ComponentType
 from Model.Action import Action
 
 
@@ -14,25 +15,24 @@ class Mapping:
         self._input = input
         self._component = component
     
-    def get_componentType(self):
+    def get_componentType(self) -> ComponentType:
         return self._component.get_type()
     
-    def get_componentPosition(self):
+    def get_componentPosition(self) -> int:
         return self._component.get_position()
     
-    def get_action(self):
+    def get_action(self) -> Action:
         return self._action
     
-    def add_argument(self, arg):
+    def add_argument(self, arg) -> None:
         self._action.addArgument(arg)
     
-    def validateInput(self, input) -> bool:
-        # don't check the last byte since it's the analogic input
-        if input[:-1] == self._input[:-1] and self.isAnalogicInput(input) == False:
+    def validateInput(self, input: str) -> bool:
+        if input == self._input:
             return True
         return False
     
-    def isAnalogicInput(self, input):
-        if input[-1] is not chr(0) and self._action.isAnalogic():
+    def isAnalogicInput(self) -> bool:
+        if self._action.isAnalogic():
             return True
         return False

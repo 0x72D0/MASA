@@ -1,4 +1,4 @@
-from Model.ComponentType import ComponentType
+from Model.Component import ComponentType
 from Model.Menu.Menu import Menu
 from Model.Model import Model
 from RPLCD import CharLCD

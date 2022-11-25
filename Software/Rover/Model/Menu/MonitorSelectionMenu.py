@@ -1,6 +1,6 @@
 from Model.Action import Action
 from Model.Component import Component
-from Model.ComponentType import ComponentType
+from Model.Component import ComponentType
 from Model.Menu.MenuStack import MenuStack
 from Model.Menu.MenuType import MenuType
 from Model.Menu.MonitorMenu import MonitorMenu
@@ -16,7 +16,7 @@ class MonitorSelectionMenu(IMenuContext):
         self._listElement = []
         super().__init__(model)
     
-    def _find_component(self, componentType: ComponentType, position: int):
+    def _find_component(self, componentType: ComponentType, position: int) -> bool:
         for component in self._selectedComponent:
             if component.get_type() == componentType and component.get_position() == position:
                 return True
@@ -25,7 +25,7 @@ class MonitorSelectionMenu(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.LIST, self._listElement   
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
         self._handleListMenuIndex(encoderHandle, (self._model.get_servoNum() + self._model.get_motorNum() + self._model.get_stepperNum()))
 
         self._listElement = []

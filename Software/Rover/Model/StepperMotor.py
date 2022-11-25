@@ -1,6 +1,6 @@
 from typing import Mapping
 from Model.Action import Action
-from Model.ActionType import ActionType
+from Model.Action import ActionType
 
 from enum import Enum
 
@@ -54,5 +54,5 @@ class StepperMotor:
                 self._currentStep = 0
                 self._currentState = StepperState.INIT
     
-    def getStep(self):
+    def getStep(self) -> int:
         return self._currentStep

@@ -10,7 +10,7 @@ class IMenuContext:
         self._model = model
         self._currentIndex = 0
     
-    def _handleListMenuIndex(self, encoderHandle: RotaryEncoderController, maxIndex):
+    def _handleListMenuIndex(self, encoderHandle: RotaryEncoderController, maxIndex) -> None:
         self._currentIndex += encoderHandle.getValue()
 
         if self._currentIndex < 0:
@@ -26,8 +26,8 @@ class IMenuContext:
     def get_menuStructure(self) -> tuple:
         pass
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
         pass
 
-    def go_back(self):
+    def go_back(self) -> None:
         pass

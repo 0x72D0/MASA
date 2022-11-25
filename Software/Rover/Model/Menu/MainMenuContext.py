@@ -18,7 +18,7 @@ class MainMenuContext(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.LIST, [u'Monitor >', u'Profile >']
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> IMenuContext:
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
         self._handleListMenuIndex(encoderHandle, self._MAX_INDEX)
         
         # manage the menu Accept button

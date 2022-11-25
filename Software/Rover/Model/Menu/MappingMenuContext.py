@@ -20,7 +20,7 @@ class MappingMenuContext(IMenuContext):
     def goBack(self):
         self._getBack = True
     
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
         if self._getBack:
             menuStack.pop()
             return

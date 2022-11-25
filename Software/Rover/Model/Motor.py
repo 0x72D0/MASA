@@ -1,6 +1,6 @@
 from typing import Mapping
 from Model.Action import Action
-from Model.ActionType import ActionType
+from Model.Action import ActionType
 
 from enum import Enum
 
@@ -54,5 +54,5 @@ class Motor:
                 self._currentSpeed = 0
                 self._currentState = MotorState.INIT
     
-    def getSpeed(self):
+    def getSpeed(self) -> int:
         return self._currentSpeed

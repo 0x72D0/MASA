@@ -20,7 +20,7 @@ class ChooseComponentMenuContext(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.COMPONENT_LIST, [self._model.get_servoNum()]
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
         accept = buttonHandle.get_rotaryEncoderButtonState()
         back = buttonHandle.backButtonCallback()
 

@@ -21,7 +21,7 @@ class AddNumberArgumentsMenuContext(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.NUMBER_ARGUMENT, [self._message, self._currentIndex]
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
         accept = buttonHandle.get_rotaryEncoderButtonState()
         back = buttonHandle.backButtonCallback()
 

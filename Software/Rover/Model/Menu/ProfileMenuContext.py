@@ -18,7 +18,7 @@ class ProfileMenuContext(IMenuContext):
     def get_menuStructure(self) -> tuple:
         return MenuType.LIST, self._profile_list
 
-    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack):
+    def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack)-> None:
         self._handleListMenuIndex(encoderHandle, len(self._model.get_profileNameList()))
 
         self._profile_list = [u'New profile']
