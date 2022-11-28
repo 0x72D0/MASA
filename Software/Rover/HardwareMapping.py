@@ -23,4 +23,4 @@ PCA_0_ADDR = 0x41
 
 # contains PCA9685 configuration
 
-PCA_0_CONFIG = [PCA9685Config(15, Component(ComponentType.SERVO_MOTOR, 0))]
+PCA_0_CONFIG = [PCA9685Config([15], Component(ComponentType.SERVO_MOTOR, 0))]

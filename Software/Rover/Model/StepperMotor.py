@@ -10,6 +10,10 @@ class StepperState(Enum):
     TOGGLE_ON = 1
     RELEASE_ON = 2
 
+class StepperMode(Enum):
+    """Mode for the servo motor"""
+    FULL_STEP = 0
+
 class StepperMotor:
     """Class that define one servo motor component"""
     def __init__(self) -> None:

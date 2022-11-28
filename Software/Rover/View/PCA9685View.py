@@ -1,5 +1,3 @@
-import HardwareMapping
-
 from smbus2 import SMBus
 from Model.Component import Component, ComponentType
 
@@ -7,14 +5,14 @@ from Model.Model import Model
 
 class PCA9685Config():
     """Class that describe the configuration of one component for the PCA9685"""
-    def __init__(self, channel: int, component: Component):
+    def __init__(self, channel: list[int], component: Component):
         self._component = component
         self._channel = channel
     
     def get_component(self) -> Component:
         return self._component
     
-    def get_channel(self) -> int:
+    def get_channel(self) -> list[int]:
         return self._channel
 
 
@@ -22,6 +20,12 @@ class PCA9685Config():
 class PCA9685View():
     """Class that control the PCA9685."""
     def __init__(self, model: Model, port:int, addr: int, configuration: list[PCA9685Config]):
+        self.SERVO_MAX_ANGLE = 180
+        self.MOTOR_MAX_SPEED = 100
+
+        self.PERIOD = 20
+        self.BYTE_RANGE = 4095
+
         self._addr = addr
         self._configuration = configuration
         self._model = model
@@ -42,13 +46,14 @@ class PCA9685View():
             componentType = config.get_component().get_type()
 
             if componentType == ComponentType.SERVO_MOTOR:
-                self._writeAngle(config.get_channel(), angleList[config.get_component().get_position()])
+                self._writeAngle(config.get_channel()[0], angleList[config.get_component().get_position()])
             elif componentType == ComponentType.DC_MOTOR:
-                self._writeSpeed(config.get_channel(), speedList[config.get_component().get_position()])
+                self._writeSpeed(config.get_channel()[0], config.get_channel()[1], speedList[config.get_component().get_position()])
  
     def _writeAngle(self, channel: int, angle: int):
-        ms = (angle/180)*19
-        pwm = round(((ms+1)/20)*4095)
+        ms = (angle/self.SERVO_MAX_ANGLE)*(self.PERIOD-1)
+        pwm = round(((ms+1)/(self.PERIOD))*self.BYTE_RANGE)
+
         byte1 = pwm & 0xFF
         byte2 = pwm >> 8
 
@@ -62,5 +67,26 @@ class PCA9685View():
         #print(self._i2cBus.read_byte_data(self._addr, channel*4+8))
         #print(self._i2cBus.read_byte_data(self._addr, channel*4+9))
     
-    def _writeSpeed(self, channel: int, speed: int):
+    def _writeSpeed(self, channel_foward: int, channel_backward: int, speed: int):
+        pwm_foward = 0
+        pwm_backward = 0
+        if(speed >= 0):
+            pwm_foward = round((speed/self.MOTOR_MAX_SPEED)*self.BYTE_RANGE)
+        else:
+            pwm_backward = round(((-speed)/self.MOTOR_MAX_SPEED)*self.BYTE_RANGE)
+        
+        byte1 = pwm_foward & 0xFF
+        byte2 = pwm_foward >> 8
+        byte3 = pwm_backward & 0xFF
+        byte4 = pwm_backward >> 8
+
+        self._i2cBus.write_byte_data(self._addr, channel_foward*4+6, 0)
+        self._i2cBus.write_byte_data(self._addr, channel_foward*4+7, 0)
+        self._i2cBus.write_byte_data(self._addr, channel_foward*4+8, byte1)
+        self._i2cBus.write_byte_data(self._addr, channel_foward*4+9, byte2)
+
+        self._i2cBus.write_byte_data(self._addr, channel_backward*4+6, 0)
+        self._i2cBus.write_byte_data(self._addr, channel_backward*4+7, 0)
+        self._i2cBus.write_byte_data(self._addr, channel_backward*4+8, byte3)
+        self._i2cBus.write_byte_data(self._addr, channel_backward*4+9, byte4)
         pass
