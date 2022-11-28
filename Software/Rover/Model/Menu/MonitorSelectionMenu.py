@@ -12,8 +12,8 @@ from Controller.RotaryEncoderController import RotaryEncoderController
 class MonitorSelectionMenu(IMenuContext):
     """Menu Context for the waiting input menu context."""
     def __init__(self, model: Model) -> None:
-        self._selectedComponent = []
-        self._listElement = []
+        self._selectedComponent = list[Component]()
+        self._listElement = list[str]()
         super().__init__(model)
     
     def _find_component(self, componentType: ComponentType, position: int) -> bool:
@@ -28,7 +28,7 @@ class MonitorSelectionMenu(IMenuContext):
     def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
         self._handleListMenuIndex(encoderHandle, (self._model.get_servoNum() + self._model.get_motorNum() + self._model.get_stepperNum()))
 
-        self._listElement = []
+        self._listElement = list[str]()
 
         # search for Servo
         for i in range(self._model.get_servoNum()):

@@ -8,7 +8,7 @@ from Model.Model import Model
 
 class MappingMenuContext(IMenuContext):
     """Menu context that chains multiple state to configure a profile item"""
-    def __init__(self, model: Model, chains: list) -> None:
+    def __init__(self, model: Model, chains: list[IMenuContext]) -> None:
         super().__init__(model)
         self._currentChain = 0
         self._menuChains = chains

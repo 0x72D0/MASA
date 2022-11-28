@@ -9,9 +9,9 @@ class ComponentType(Enum):
 
 class Component:
     """Class that define a component"""
-    def __init__(self) -> None:
-        self._type = ComponentType.NONE
-        self._position = 0
+    def __init__(self, type = ComponentType.NONE, position = 0) -> None:
+        self._type = type
+        self._position = position
     
     def set_position(self, pos: int) -> None:
         self._position = pos

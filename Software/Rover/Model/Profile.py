@@ -10,9 +10,9 @@ from Model.Mapping import Mapping
 
 class Profile:
     """Class that define one profile."""
-    def __init__(self, name) -> None:
+    def __init__(self, name: str) -> None:
         self._name = name
-        self._mappings = []
+        self._mappings = list[Mapping]()
         self._controller = DabbleGamepadBluetoothController()
         self._mappingQueue = Queue()
         self._waiting_for_packet = False
@@ -30,7 +30,6 @@ class Profile:
         self._controller.cleanup()
 
     def update(self) -> None:
-        packet = 'a'
         if not self._waiting_for_packet:
             packet = self._controller.readPacket()
 

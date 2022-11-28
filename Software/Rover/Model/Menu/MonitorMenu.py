@@ -10,16 +10,16 @@ from Controller.RotaryEncoderController import RotaryEncoderController
 
 class MonitorMenu(IMenuContext):
     """Menu Context for the waiting input menu context."""
-    def __init__(self, model: Model, selectedComponent: list) -> None:
+    def __init__(self, model: Model, selectedComponent: list[Component]) -> None:
         self._selectedComponent = selectedComponent
-        self._monitorElement = []
+        self._monitorElement = list()
         super().__init__(model)
     
     def get_menuStructure(self) -> tuple:
         return MenuType.MONITOR, self._monitorElement   
 
     def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
-        self._monitorElement = []
+        self._monitorElement = list()
 
         # search for Servo
         for component in self._selectedComponent:

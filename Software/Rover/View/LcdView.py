@@ -34,26 +34,32 @@ class LcdView:
 
         if self._menu.needScreenRefresh():
             self._lcd.clear()
+        
+        if currentMenuType == MenuType.NONE:
+            return
 
-        if currentMenuType == MenuType.LIST:
+        elif currentMenuType == MenuType.LIST:
             self._drawList(currentCursor, args)
         
-        if currentMenuType == MenuType.STILL_MESSAGE:
+        elif currentMenuType == MenuType.STILL_MESSAGE:
             self._drawStillMessage(args)
         
-        if currentMenuType == MenuType.NUMBER_ARGUMENT:
+        elif currentMenuType == MenuType.NUMBER_ARGUMENT:
             self._drawNumberArgument(args)
         
-        if currentMenuType == MenuType.INPUT_CHAR:
+        elif currentMenuType == MenuType.INPUT_CHAR:
             self._drawInputChar(args)
         
-        if currentMenuType == MenuType.COMPONENT_LIST:
+        elif currentMenuType == MenuType.COMPONENT_LIST:
             self._drawComponentList(currentCursor, args)
         
-        if currentMenuType == MenuType.MONITOR:
+        elif currentMenuType == MenuType.MONITOR:
             self._drawMonitor(args)
+        
+        else:
+            raise(NotImplementedError("LCD Menu type not implemented yet"))
     
-    def _drawList(self, cursorPos, args: list):
+    def _drawList(self, cursorPos, args: list[str]):
         currentSubPage = cursorPos // self.ROW
 
         if self._lastSubPage != currentSubPage:
@@ -76,23 +82,23 @@ class LcdView:
         if cursorPos != self._currentCursorPos:
             self._drawCursor(cursorPos)
     
-    def _drawStillMessage(self, args: list):
+    def _drawStillMessage(self, args: list[str]):
         self._lcd.cursor_pos = (1,0)
         self._lcd.write_string(args[0])
     
-    def _drawNumberArgument(self, args: list):
+    def _drawNumberArgument(self, args: list[str]):
         self._lcd.cursor_pos = (1,0)
         self._lcd.write_string(args[0])
         self._lcd.cursor_pos = (2,10)
         self._lcd.write_string(str(args[1]))
     
-    def _drawInputChar(self, args: list):
+    def _drawInputChar(self, args: list[str]):
         self._lcd.cursor_pos = (1,0)
         self._lcd.write_string("Input string:")
         self._lcd.cursor_pos = (2,10)
         self._lcd.write_string(args[0])
     
-    def _drawCursor(self, position):
+    def _drawCursor(self, position: int):
         if position >= self.ROW:
             position = position % self.ROW
 
@@ -104,7 +110,7 @@ class LcdView:
 
         self._currentCursorPos = position
     
-    def _drawComponentList(self, cursorPos, args: list):
+    def _drawComponentList(self, cursorPos, args: list[int]):
         self._lcd.cursor_pos = (0,0)
         self._lcd.write_string("Choose Component:")
         
@@ -122,7 +128,7 @@ class LcdView:
 
             self._currentCursorPos = cursorPos
     
-    def _drawMonitor(self, args: list):
+    def _drawMonitor(self, args: list[ComponentType, int]):
         if(len(args) >= 3):
             self._lcd.cursor_pos = (0,0)
             self._lcd.write_string(self._writeMonitorString(args[0], args[1], args[2]))
@@ -145,6 +151,8 @@ class LcdView:
             return "stepper " + str(position) + ": " + str(data).rjust(3, "0") + " step"
 
     def _loadingMenuChar(self):
+
+        # Only 8 char can be loaded
         self._lcd.create_char(0, self.SELECT_ARROW_CHAR)
         self._lcd.create_char(1, self.UP_ARROW_CHAR)
         self._lcd.create_char(2, self.CHECK_MARK)

@@ -43,10 +43,16 @@ class Model:
     def get_motorComponent(self, position: int) -> Motor:
         return self._motors[position]
 
-    def get_servosAngle(self) -> list:
-        tempList = []
+    def get_servosAngle(self) -> list[int]:
+        tempList = list[int]()
         for servo in self._servos:
             tempList.append(servo.getAngle())
+        return tempList
+    
+    def get_motorsSpeed(self) -> list[int]:
+        tempList = list[int]()
+        for motor in self._motors:
+            tempList.append(motor.getSpeed())
         return tempList
     
     def startNewProfile(self, name: str) -> None:
@@ -74,7 +80,7 @@ class Model:
     def deleteProfileName(self, name: str) -> None:
         self._profileDatabase.deleteProfile(name)
     
-    def get_profileNameList(self) -> list:
+    def get_profileNameList(self) -> list[str]:
         return self._profileDatabase.get_profilesName()
     
     def update(self) -> None:

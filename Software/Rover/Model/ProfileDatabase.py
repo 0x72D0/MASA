@@ -11,7 +11,7 @@ class ProfileDatabase:
             with open(ProfileDatabase.PROFILE_FILENAME, "rb") as fd:
                 self._profiles = pickle.load(fd)
         else:
-            self._profiles = []
+            self._profiles = list[Profile]()
     
     def get_profile(self, name: str) -> Profile:
         for profile in self._profiles:
@@ -19,8 +19,8 @@ class ProfileDatabase:
                 return profile
         return None
     
-    def get_profilesName(self) -> list:
-        names = []
+    def get_profilesName(self) -> list[str]:
+        names = list[str]()
         for profile in self._profiles:
             names.append(profile.get_name())
         return names

@@ -13,7 +13,7 @@ class Action:
     """Class that define a action on a component."""
     def __init__(self):
         self._actionType = ActionType.NONE
-        self._actionArguments = []
+        self._actionArguments = list()
     
     def set_actionType(self, actionType: ActionType):
         self._actionType = actionType
