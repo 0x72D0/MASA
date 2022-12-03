@@ -13,6 +13,11 @@ class StepperState(Enum):
 class StepperMode(Enum):
     """Mode for the servo motor"""
     FULL_STEP = 0
+    HALF_STEP = 1
+    STEP_1_4 = 2
+    STEP_1_8 = 3
+    STEP_1_16 = 4
+    STEP_1_32 = 5
 
 class StepperMotor:
     """Class that define one servo motor component"""
