@@ -15,7 +15,7 @@ class LcdView:
         self.ROW = 4
 
         self._menu = menu
-        self._lcd = CharLCD(cols=self.COL, rows=self.ROW, pin_rs=HardwareMapping.LCD_RS_PIN, pin_e=HardwareMapping.LCD_E_PIN, pins_data=[HardwareMapping.LCD_D1_PIN, HardwareMapping.LCD_D2_PIN, HardwareMapping.LCD_D3_PIN, HardwareMapping.LCD_D4_PIN], numbering_mode=GPIO.BOARD)
+        self._lcd = CharLCD(cols=self.COL, rows=self.ROW, pin_rw=HardwareMapping.LCD_RW_PIN, pin_rs=HardwareMapping.LCD_RS_PIN, pin_e=HardwareMapping.LCD_E_PIN, pins_data=[HardwareMapping.LCD_D1_PIN, HardwareMapping.LCD_D2_PIN, HardwareMapping.LCD_D3_PIN, HardwareMapping.LCD_D4_PIN], numbering_mode=GPIO.BOARD)
 
         self._currentCursorPos = 1
         self._lastSubPage = 0
