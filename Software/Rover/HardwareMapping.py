@@ -1,33 +1,31 @@
 from Model.Component import Component, ComponentType
-from Software.Rover.View.PCA9535View import PCA9535Config
+from View.PCA9535View import PCA9535Config
 from View.PCA9685View import PCA9685Config
-
-# TODO: verify with yoann version
 
 # contains all pinout definition
 
-ROTARY_ENCODER_D2_PIN=17
-ROTARY_ENCODER_D3_PIN=15
-ROTARY_ENCODER_SW_PIN=21
+ROTARY_ENCODER_D2_PIN=38
+ROTARY_ENCODER_D3_PIN=40
+ROTARY_ENCODER_SW_PIN=19
 
-BACK_BUTTON_PIN=31
+BACK_BUTTON_PIN=23
 
-LCD_RS_PIN=39
-LCD_E_PIN=37
-LCD_RW_PIN=35
+LCD_RS_PIN=22 # on the board it's RW
+LCD_E_PIN=18 # on the board it's RS
+#LCD_RW_PIN=36 # on the board it's E
 
-LCD_D1_PIN=12
-LCD_D2_PIN=14
-LCD_D3_PIN=16
-LCD_D4_PIN=30
+LCD_D0_PIN=11
+LCD_D1_PIN=13
+LCD_D2_PIN=15
+LCD_D3_PIN=12
 
 # contains I2C addressing
 
 PCA_0_PORT = 0x01
-PCA_0_ADDR = 0x41
+PCA_0_ADDR = 0x40
 
 PCA_1_PORT = 0x01
-PCA_1_ADDR = 0x41
+PCA_1_ADDR = 0x70
 
 # contains PCA9685 configuration
 

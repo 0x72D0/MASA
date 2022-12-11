@@ -29,7 +29,7 @@ class PCA9535View():
         self._model = model
         self._i2cBus = SMBus(port)
 
-        self._currentStepper = [0*16]
+        self._currentStepper = [0]*16
 
         #set all the io to output
         self._i2cBus.write_byte_data(self._addr, 6, 0b00000000)
@@ -42,11 +42,11 @@ class PCA9535View():
             componentType = config.get_component().get_type()
 
             if componentType == ComponentType.STEPPER:
-                self._writeStep(config.get_channel(), self._currentStepper[config.get_channel()[0]], stepList[config.get_component().get_position()], StepperMode.FULL_STEP)
+                self._writeStep(config.get_channel(), self._currentStepper[config.get_component().get_position()], stepList[config.get_component().get_position()], StepperMode.FULL_STEP)
         
     def _writeStep(self, channel_list: list[int], currentStep: int, targetStep: int, mode: StepperMode):
         """Channel 0 is the Step channel / Channel 1 is the DIR channel and Channel 2,3,4 is M0,M1,M2"""
-        bit_mask = (self._i2cBus.read_byte_data(self.OUTPUT_0) << 8) | self._i2cBus.read_byte_data(self.OUTPUT_1)
+        bit_mask = (self._i2cBus.read_byte_data(self._addr, self.OUTPUT_REGISTER_0) << 8) | self._i2cBus.read_byte_data(self._addr, self.OUTPUT_REGISTER_1)
 
         bit_mask = self._setBit(bit_mask, channel_list[0])
 

@@ -10,12 +10,14 @@ from Model.Motor import Motor
 class Model:
     """Singleton that define all the model."""
     def __init__(self) -> None:
-        self.SERVO_NUM = 8
-        self.STEPPER_NUM = 8
-        self.MOTOR_NUM = 8
+        self.SERVO_NUM = 4
+        self.STEPPER_NUM = 2
+        self.MOTOR_NUM = 4
 
         self._profileDatabase = ProfileDatabase()
         self._currentProfileName = ""
+
+        self.TestProfile = Profile("test")
 
         self._servos = [ServoMotor()] * self.MOTOR_NUM
         self._motors = [Motor()] * self.SERVO_NUM
@@ -55,6 +57,12 @@ class Model:
             tempList.append(motor.getSpeed())
         return tempList
     
+    def get_stepperStep(self) -> list[int]:
+        tempList = list[int]()
+        for stepper in self._stepper:
+            tempList.append(stepper.getStep())
+        return tempList
+    
     def startNewProfile(self, name: str) -> None:
         self._profileDatabase.newProfile(name)
 
@@ -85,7 +93,8 @@ class Model:
     
     def update(self) -> None:
         self._profileDatabase.save_profiles()
-        profile = self._profileDatabase.get_profile(self._currentProfileName)
+        #profile = self._profileDatabase.get_profile(self._currentProfileName)
+        profile = self.TestProfile
         if profile is not None:
             profile.update()
 

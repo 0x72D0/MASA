@@ -11,12 +11,16 @@ from Model.Menu.MenuType import MenuType
 class LcdView:
     """Class that control the lcd2004"""
     def __init__(self, menu: Menu) -> None:
+        self.DEBUG_TERMINAL = True
+
         self.COL = 20
         self.ROW = 4
 
         self._menu = menu
-        self._lcd = CharLCD(cols=self.COL, rows=self.ROW, pin_rw=HardwareMapping.LCD_RW_PIN, pin_rs=HardwareMapping.LCD_RS_PIN, pin_e=HardwareMapping.LCD_E_PIN, pins_data=[HardwareMapping.LCD_D1_PIN, HardwareMapping.LCD_D2_PIN, HardwareMapping.LCD_D3_PIN, HardwareMapping.LCD_D4_PIN], numbering_mode=GPIO.BOARD)
+        self._lcd = CharLCD(cols=self.COL, rows=self.ROW, pin_rs=HardwareMapping.LCD_RS_PIN, pin_e=HardwareMapping.LCD_E_PIN, pins_data=[HardwareMapping.LCD_D0_PIN, HardwareMapping.LCD_D1_PIN, HardwareMapping.LCD_D2_PIN, HardwareMapping.LCD_D3_PIN], numbering_mode=GPIO.BOARD)
 
+        self._lcd.clear()
+        self._lcd_write_string("Test")
         self._currentCursorPos = 1
         self._lastSubPage = 0
 
@@ -71,78 +75,79 @@ class LcdView:
             args.append(u' ')
 
         self._lcd.cursor_pos = (0,2)
-        self._lcd.write_string(args[currentSubPage*4+0])
+        self._lcd_write_string(args[currentSubPage*4+0])
         self._lcd.cursor_pos = (1,2)
-        self._lcd.write_string(args[currentSubPage*4+1])
+        self._lcd_write_string(args[currentSubPage*4+1])
         self._lcd.cursor_pos = (2,2)
-        self._lcd.write_string(args[currentSubPage*4+2])
+        self._lcd_write_string(args[currentSubPage*4+2])
         self._lcd.cursor_pos = (3,2)
-        self._lcd.write_string(args[currentSubPage*4+3])
+        self._lcd_write_string(args[currentSubPage*4+3])
 
         if cursorPos != self._currentCursorPos:
             self._drawCursor(cursorPos)
     
     def _drawStillMessage(self, args: list[str]):
         self._lcd.cursor_pos = (1,0)
-        self._lcd.write_string(args[0])
+        self._lcd_write_string(args[0])
     
     def _drawNumberArgument(self, args: list[str]):
         self._lcd.cursor_pos = (1,0)
-        self._lcd.write_string(args[0])
+        self._lcd_write_string(args[0])
         self._lcd.cursor_pos = (2,10)
-        self._lcd.write_string(str(args[1]))
+        self._lcd_write_string(str(args[1]))
     
     def _drawInputChar(self, args: list[str]):
         self._lcd.cursor_pos = (1,0)
-        self._lcd.write_string("Input string:")
+        self._lcd_write_string("Input string:")
         self._lcd.cursor_pos = (2,10)
-        self._lcd.write_string(args[0])
+        self._lcd_write_string(args[0])
     
     def _drawCursor(self, position: int):
         if position >= self.ROW:
             position = position % self.ROW
 
         self._lcd.cursor_pos = (self._currentCursorPos, 1)
-        self._lcd.write_string(u" ")
+        self._lcd_write_string(u" ")
 
         self._lcd.cursor_pos = (position, 1)
-        self._lcd.write_string(u'\x00')
+        self._lcd_write_string(u'\x00')
 
         self._currentCursorPos = position
     
     def _drawComponentList(self, cursorPos, args: list[int]):
         self._lcd.cursor_pos = (0,0)
-        self._lcd.write_string("Choose Component:")
+        self._lcd_write_string("Choose Component:")
         
         for i in range(args[0]):
             self._lcd.cursor_pos = (1,i*2)
-            self._lcd.write_string(" " + str(i))
+            self._lcd_write_string(" " + str(i))
         
         # drawing cursor
         if cursorPos != self._currentCursorPos:
             self._lcd.cursor_pos = (2, (self._currentCursorPos*2)+1)
-            self._lcd.write_string(u" ")
+            self._lcd_write_string(u" ")
 
             self._lcd.cursor_pos = (2, (cursorPos*2)+1)
-            self._lcd.write_string(u'\x01')
+            self._lcd_write_string(u'\x01')
 
             self._currentCursorPos = cursorPos
+            self._debug_string("current Cursor Position: " + str(self._currentCursorPos))
     
     def _drawMonitor(self, args: list[ComponentType, int]):
         if(len(args) >= 3):
             self._lcd.cursor_pos = (0,0)
-            self._lcd.write_string(self._writeMonitorString(args[0], args[1], args[2]))
+            self._lcd_write_string(self._writeMonitorString(args[0], args[1], args[2]))
         if(len(args) >= 6):
             self._lcd.cursor_pos = (1,0)
-            self._lcd.write_string(self._writeMonitorString(args[3], args[4], args[5]))
+            self._lcd_write_string(self._writeMonitorString(args[3], args[4], args[5]))
         if(len(args) >= 9):
             self._lcd.cursor_pos = (2,0)
-            self._lcd.write_string(self._writeMonitorString(args[6], args[7], args[8]))
+            self._lcd_write_string(self._writeMonitorString(args[6], args[7], args[8]))
         if(len(args) >= 12):
             self._lcd.cursor_pos = (3,0)
-            self._lcd.write_string(self._writeMonitorString(args[9], args[10], args[11]))
+            self._lcd_write_string(self._writeMonitorString(args[9], args[10], args[11]))
 
-    def _writeMonitorString(self, componentType: ComponentType, position: int , data: int):
+    def _writeMonitorString(self, componentType: ComponentType, position: int , data: int) -> str:
         if componentType == ComponentType.SERVO_MOTOR:
             return "servo " + str(position) + ": " + str(data).rjust(3, "0") + " deg"
         if componentType == ComponentType.DC_MOTOR:
@@ -157,4 +162,10 @@ class LcdView:
         self._lcd.create_char(1, self.UP_ARROW_CHAR)
         self._lcd.create_char(2, self.CHECK_MARK)
     
-        
+    def _lcd_write_string(self, string: str):
+        self._debug_string(string)
+        self._lcd.write_string(string)
+    
+    def _debug_string(self, string: str):
+        if self.DEBUG_TERMINAL:
+            print(string)
