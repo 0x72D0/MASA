@@ -9,7 +9,7 @@ class ButtonController():
     __rotaryEncoderLastTime = 0
     __backButtonState = 0
     __backButtonLastTime = 0
-    __debouncingSeconds = 2
+    __debouncingSeconds = 0.5
 
     def __init__(self):
         GPIO.setup(HardwareMapping.ROTARY_ENCODER_SW_PIN, GPIO.IN)

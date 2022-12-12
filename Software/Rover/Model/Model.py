@@ -17,8 +17,6 @@ class Model:
         self._profileDatabase = ProfileDatabase()
         self._currentProfileName = ""
 
-        self.TestProfile = Profile("test")
-
         self._servos = [ServoMotor()] * self.MOTOR_NUM
         self._motors = [Motor()] * self.SERVO_NUM
         self._stepper = [StepperMotor()] * self.STEPPER_NUM
@@ -91,10 +89,11 @@ class Model:
     def get_profileNameList(self) -> list[str]:
         return self._profileDatabase.get_profilesName()
     
-    def update(self) -> None:
+    def saveProfiles(self) -> None:
         self._profileDatabase.save_profiles()
-        #profile = self._profileDatabase.get_profile(self._currentProfileName)
-        profile = self.TestProfile
+    
+    def update(self) -> None:
+        profile = self._profileDatabase.get_profile(self._currentProfileName)
         if profile is not None:
             profile.update()
 
@@ -103,3 +102,9 @@ class Model:
                 
                 if mapping.get_componentType() == ComponentType.SERVO_MOTOR:
                     self._servos[mapping.get_componentPosition()].update(mapping.get_action())
+                
+                elif mapping.get_componentType() == ComponentType.DC_MOTOR:
+                    self._motors[mapping.get_componentPosition()].update(mapping.get_action())
+                
+                elif mapping.get_componentType() == ComponentType.STEPPER:
+                    self._stepper[mapping.get_componentPosition()].update(mapping.get_action())

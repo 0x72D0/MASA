@@ -4,8 +4,8 @@ from View.PCA9685View import PCA9685Config
 
 # contains all pinout definition
 
-ROTARY_ENCODER_D2_PIN=38
-ROTARY_ENCODER_D3_PIN=40
+ROTARY_ENCODER_D2_PIN=40
+ROTARY_ENCODER_D3_PIN=38
 ROTARY_ENCODER_SW_PIN=19
 
 BACK_BUTTON_PIN=23
@@ -22,25 +22,25 @@ LCD_D3_PIN=12
 # contains I2C addressing
 
 PCA_0_PORT = 0x01
-PCA_0_ADDR = 0x40
+PCA_0_ADDR = 0x70
 
 PCA_1_PORT = 0x01
-PCA_1_ADDR = 0x70
+PCA_1_ADDR = 0x20
 
 # contains PCA9685 configuration
 
 PCA_0_CONFIG = [
-    PCA9685Config([5,4], Component(ComponentType.DC_MOTOR, 0)),
-    PCA9685Config([3,2], Component(ComponentType.DC_MOTOR, 1)),
-    PCA9685Config([1,0], Component(ComponentType.DC_MOTOR, 2)),
-    PCA9685Config([7,6], Component(ComponentType.DC_MOTOR, 3)),
-    PCA9685Config([8], Component(ComponentType.SERVO_MOTOR, 0)), 
-    PCA9685Config([9], Component(ComponentType.SERVO_MOTOR, 1)), 
-    PCA9685Config([10], Component(ComponentType.SERVO_MOTOR, 2)), 
-    PCA9685Config([11], Component(ComponentType.SERVO_MOTOR, 3))
+    PCA9685Config([9, 8], Component(ComponentType.DC_MOTOR, 0)),
+    PCA9685Config([11, 10], Component(ComponentType.DC_MOTOR, 1)),
+    PCA9685Config([13, 12], Component(ComponentType.DC_MOTOR, 2)),
+    PCA9685Config([15, 14], Component(ComponentType.DC_MOTOR, 3)),
+    PCA9685Config([4], Component(ComponentType.SERVO_MOTOR, 0)), 
+    PCA9685Config([5], Component(ComponentType.SERVO_MOTOR, 1)), 
+    PCA9685Config([6], Component(ComponentType.SERVO_MOTOR, 2)), 
+    PCA9685Config([7], Component(ComponentType.SERVO_MOTOR, 3))
     ]
 
 PCA_1_CONFIG = [
-    PCA9535Config([0,1,2,3,4], Component(ComponentType.STEPPER, 0)),
-    PCA9535Config([8,9,10,11,12], Component(ComponentType.STEPPER, 1)),
+    PCA9535Config([11, 12, 8, 9, 10], Component(ComponentType.STEPPER, 0)),
+    PCA9535Config([1, 0, 4, 3, 2], Component(ComponentType.STEPPER, 1)),
     ]

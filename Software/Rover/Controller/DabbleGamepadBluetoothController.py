@@ -56,10 +56,10 @@ class DabbleGamepadBluetoothController(IController):
         intensity = self._packet[-1] & 0x07
         rotation = self._packet[-1] >> 3
 
-        if(rotation >= 0b00100 and rotation <= 0b01000):
+        if(rotation >= 0b00000 and rotation <= 0b01010):
             byteArray.append(int(((intensity/0x07)*127)+128))
-        elif(rotation >= 0b10000 and rotation <= 0b10100):
-            byteArray.append(int(127-((intensity/0x06)*127)))
+        elif(rotation > 0b01010):
+            byteArray.append(int(127-((intensity/0x07)*127)))
         elif(rotation == 0 and intensity == 0):
             byteArray.append(128)
         else:

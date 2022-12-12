@@ -99,6 +99,7 @@ class LcdView:
     def _drawInputChar(self, args: list[str]):
         self._lcd.cursor_pos = (1,0)
         self._lcd_write_string("Input string:")
+        
         self._lcd.cursor_pos = (2,10)
         self._lcd_write_string(args[0])
     
@@ -113,6 +114,7 @@ class LcdView:
         self._lcd_write_string(u'\x00')
 
         self._currentCursorPos = position
+        self._debug_string("current Cursor Position: " + str(self._currentCursorPos))
     
     def _drawComponentList(self, cursorPos, args: list[int]):
         self._lcd.cursor_pos = (0,0)

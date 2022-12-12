@@ -22,7 +22,7 @@ class AnalogicInputMenuContext(IMenuContext):
     def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
 
         accept = buttonHandle.get_rotaryEncoderButtonState()
-        back = buttonHandle.backButtonCallback()
+        back = buttonHandle.get_backButtonState()
         
         if self._model.mapAnalogicInputToProfile(self._action, self._component):
             menuStack.pop()

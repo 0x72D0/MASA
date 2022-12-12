@@ -10,23 +10,21 @@ from Controller.ButtonController import ButtonController
 from Controller.RotaryEncoderController import RotaryEncoderController
 
 
-class WaitingInputMenuContext(IMenuContext):
-    """Menu Context for the waiting input menu context."""
-    def __init__(self, model: Model, action: Action, component: Component) -> None:
-        self._action = action
-        self._component = component
+class CustomStillImageMenuContext(IMenuContext):
+    """Menu Context for printing a String on the LCD screen"""
+    def __init__(self, model: Model, text: str) -> None:
+        self._text = text
         super().__init__(model)
     
     def get_menuStructure(self) -> tuple:
-        return MenuType.STILL_MESSAGE, [u'waiting for input']
+        return MenuType.STILL_MESSAGE, [self._text]
 
     def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack)-> None:
 
         accept = buttonHandle.get_rotaryEncoderButtonState()
         back = buttonHandle.get_backButtonState()
         
-        if self._model.mapDigitalInputToProfile(self._action, self._component):
-            menuStack.pop()
-        
+        if accept == 1:
+            menuStack.pop
         if back == 1:
             menuStack.pop()

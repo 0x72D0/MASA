@@ -30,7 +30,7 @@ class AddProfileNameMenuContext(IMenuContext):
             return
         
         accept = buttonHandle.get_rotaryEncoderButtonState()
-        back = buttonHandle.backButtonCallback()
+        back = buttonHandle.get_backButtonState()
 
         self._currentIndex += encoderHandle.getValue()
 

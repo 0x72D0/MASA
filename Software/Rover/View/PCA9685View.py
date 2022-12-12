@@ -31,6 +31,9 @@ class PCA9685View():
         self._model = model
         self._i2cBus = SMBus(port)
 
+        self._currentServoAngle = [0]*self._model.get_servoNum()
+        self._currentMotorSpeed = [0]*self._model.get_motorNum()
+
         #set the prescaler
         self._i2cBus.write_byte_data(self._addr, 254, 121)
 
@@ -46,11 +49,16 @@ class PCA9685View():
             componentType = config.get_component().get_type()
 
             if componentType == ComponentType.SERVO_MOTOR:
-                self._writeAngle(config.get_channel()[0], angleList[config.get_component().get_position()])
+                self._currentServoAngle[config.get_component().get_position()] = self._writeAngle(config.get_channel()[0], self._currentServoAngle[config.get_component().get_position()], angleList[config.get_component().get_position()])
             elif componentType == ComponentType.DC_MOTOR:
-                self._writeSpeed(config.get_channel()[0], config.get_channel()[1], speedList[config.get_component().get_position()])
+                self._currentMotorSpeed[config.get_component().get_position()] = self._writeSpeed(config.get_channel()[0], config.get_channel()[1], self._currentMotorSpeed[config.get_component().get_position()], speedList[config.get_component().get_position()])
  
-    def _writeAngle(self, channel: int, angle: int):
+    def _writeAngle(self, channel: int, currentAngle: int, angle: int) -> int:
+        if(currentAngle == angle):
+            return currentAngle
+        
+        print("updating servo on channel: " + str(channel) + "! updating angle: " + str(angle))
+
         ms = (angle/self.SERVO_MAX_ANGLE)*(self.PERIOD-1)
         pwm = round(((ms+1)/(self.PERIOD))*self.BYTE_RANGE)
 
@@ -66,8 +74,15 @@ class PCA9685View():
         #print(self._i2cBus.read_byte_data(self._addr, channel*4+7))
         #print(self._i2cBus.read_byte_data(self._addr, channel*4+8))
         #print(self._i2cBus.read_byte_data(self._addr, channel*4+9))
+
+        return angle
     
-    def _writeSpeed(self, channel_foward: int, channel_backward: int, speed: int):
+    def _writeSpeed(self, channel_foward: int, channel_backward: int, currentSpeed: int, speed: int) -> int:
+        if(speed == currentSpeed):
+            return currentSpeed
+        
+        print("updating motor on channels: " + str(channel_foward) + "/" + str(channel_backward) + "! updating speed: " + str(speed))
+
         pwm_foward = 0
         pwm_backward = 0
         if(speed >= 0):
@@ -89,4 +104,5 @@ class PCA9685View():
         self._i2cBus.write_byte_data(self._addr, channel_backward*4+7, 0)
         self._i2cBus.write_byte_data(self._addr, channel_backward*4+8, byte3)
         self._i2cBus.write_byte_data(self._addr, channel_backward*4+9, byte4)
-        pass
+        
+        return speed

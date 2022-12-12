@@ -23,7 +23,7 @@ class AddNumberArgumentsMenuContext(IMenuContext):
 
     def update(self, encoderHandle: RotaryEncoderController, buttonHandle: ButtonController, menuStack: MenuStack) -> None:
         accept = buttonHandle.get_rotaryEncoderButtonState()
-        back = buttonHandle.backButtonCallback()
+        back = buttonHandle.get_backButtonState()
 
         self._currentIndex += encoderHandle.getValue()
 

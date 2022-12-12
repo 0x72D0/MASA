@@ -47,7 +47,7 @@ class StepperMotor:
                 # first argument is the type of analog control
                 if args[0] == 0:
                     if args[2] >= 0:
-                        self._currentStep = (args[2]/255)*args[1]
+                        self._currentStep = round((args[2]/255)*args[1])
                     else:
                         self._currentStep = 0
             
