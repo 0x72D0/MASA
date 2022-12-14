@@ -10,9 +10,9 @@ from Model.Motor import Motor
 class Model:
     """Singleton that define all the model."""
     def __init__(self) -> None:
-        self.SERVO_NUM = 8
-        self.STEPPER_NUM = 8
-        self.MOTOR_NUM = 8
+        self.SERVO_NUM = 4
+        self.STEPPER_NUM = 2
+        self.MOTOR_NUM = 4
 
         self._profileDatabase = ProfileDatabase()
         self._currentProfileName = ""
@@ -55,6 +55,12 @@ class Model:
             tempList.append(motor.getSpeed())
         return tempList
     
+    def get_stepperStep(self) -> list[int]:
+        tempList = list[int]()
+        for stepper in self._stepper:
+            tempList.append(stepper.getStep())
+        return tempList
+    
     def startNewProfile(self, name: str) -> None:
         self._profileDatabase.newProfile(name)
 
@@ -83,8 +89,10 @@ class Model:
     def get_profileNameList(self) -> list[str]:
         return self._profileDatabase.get_profilesName()
     
-    def update(self) -> None:
+    def saveProfiles(self) -> None:
         self._profileDatabase.save_profiles()
+    
+    def update(self) -> None:
         profile = self._profileDatabase.get_profile(self._currentProfileName)
         if profile is not None:
             profile.update()
@@ -94,3 +102,9 @@ class Model:
                 
                 if mapping.get_componentType() == ComponentType.SERVO_MOTOR:
                     self._servos[mapping.get_componentPosition()].update(mapping.get_action())
+                
+                elif mapping.get_componentType() == ComponentType.DC_MOTOR:
+                    self._motors[mapping.get_componentPosition()].update(mapping.get_action())
+                
+                elif mapping.get_componentType() == ComponentType.STEPPER:
+                    self._stepper[mapping.get_componentPosition()].update(mapping.get_action())

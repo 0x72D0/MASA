@@ -33,7 +33,7 @@ class MonitorMenu(IMenuContext):
             if component.get_type() == ComponentType.STEPPER:
                 self._monitorElement.append(self._model.get_stepperComponent(component.get_position()).getStep())
 
-        back = buttonHandle.backButtonCallback()
+        back = buttonHandle.get_backButtonState()
         
         if back == 1:
             menuStack.pop()

@@ -54,7 +54,7 @@ class MonitorSelectionMenu(IMenuContext):
         self._listElement.append("Done")
 
         accept = buttonHandle.get_rotaryEncoderButtonState()
-        back = buttonHandle.backButtonCallback()
+        back = buttonHandle.get_backButtonState()
         
         if accept == 1:
             servoIndex = self._model.get_servoNum()

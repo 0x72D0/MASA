@@ -65,7 +65,7 @@ class Profile:
                         self._mappings.pop(i)
 
         self._mappings.append(Mapping(action, str(packet.get_event()), component))
-        print("mapping " + str(packet.get_event()))
+        print("mapping " + str(packet.get_event()) + "to component position: " + str(component.get_position()))
 
         self._waiting_for_packet = False
         return True
