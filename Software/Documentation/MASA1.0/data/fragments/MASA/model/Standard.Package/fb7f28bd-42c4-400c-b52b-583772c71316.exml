@@ -1,0 +1,210 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Model" version="4">
+  <OBJECT>
+    <ID name="Model" mc="Standard.Package" uid="fb7f28bd-42c4-400c-b52b-583772c71316"/>
+    <PID name="masa" mc="Standard.Package" uid="c8cc82ca-e8b7-4dc6-9fc6-11da4ae97349"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[Model]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="Profile" mc="Standard.Class" uid="05e2c076-bd92-4c23-a6d3-9760a0d4ade6"/>
+        <COMPID name="Mapping" mc="Standard.Class" uid="9b26d2b6-2526-4014-8635-4b3853342d1d"/>
+        <OBJECT>
+          <ID name="e_Action" mc="Standard.Enumeration" uid="fbeccadd-fe2b-4ed4-9c40-fdc968910cc5"/>
+          <ATTRIBUTES>
+            <ATT name="IsElementary">true</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="IsLeaf">false</ATT>
+            <ATT name="IsRoot">false</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="Name"><![CDATA[e_Action]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <COMPID name="Model" mc="Standard.Class" uid="86731242-d8c1-46a4-a5d8-7f257a11f2bb"/>
+        <COMPID name="DcMotor" mc="Standard.Class" uid="569f68de-c4a7-48eb-b4aa-3c47e4f24c80"/>
+        <COMPID name="StepperMotor" mc="Standard.Class" uid="d1f6940a-7577-43b0-a784-83cdc4cb1a37"/>
+        <COMPID name="ServoMotor" mc="Standard.Class" uid="3688af31-f60d-49c8-8dac-c952b48681a7"/>
+        <COMPID name="ProfileDatabase" mc="Standard.Class" uid="c67008a9-7736-4010-b63e-b77f2ad6dbb2"/>
+        <OBJECT>
+          <ID name="StepperMode" mc="Standard.Enumeration" uid="d6d5bc38-a24b-4220-8b9e-9a692a97d2f7"/>
+          <ATTRIBUTES>
+            <ATT name="IsElementary">true</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="IsLeaf">false</ATT>
+            <ATT name="IsRoot">false</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="Name"><![CDATA[StepperMode]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="OwnedEnd">
+              <OBJECT>
+                <ID name="stepperMotor" mc="Standard.AssociationEnd" uid="c7f0c163-63d6-4f2c-b754-47afd785f6a4"/>
+                <ATTRIBUTES>
+                  <ATT name="Aggregation">KindIsComposition</ATT>
+                  <ATT name="IsChangeable">true</ATT>
+                  <ATT name="Changeable">ReadWrite</ATT>
+                  <ATT name="IsDerived">false</ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+                  <ATT name="Visibility">Public</ATT>
+                  <ATT name="IsClass">false</ATT>
+                  <ATT name="IsAbstract">false</ATT>
+                  <ATT name="Name"><![CDATA[stepperMotor]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <ID name="StepperMotor" mc="Standard.Class" uid="d1f6940a-7577-43b0-a784-83cdc4cb1a37"/>
+                  </LINK>
+                  <COMP relation="Opposite">
+                    <OBJECT>
+                      <ID name="" mc="Standard.AssociationEnd" uid="4cf846ec-3fab-429c-9c9e-dc8809b3b0f7"/>
+                      <ATTRIBUTES>
+                        <ATT name="Aggregation">KindIsAssociation</ATT>
+                        <ATT name="IsChangeable">true</ATT>
+                        <ATT name="Changeable">ReadWrite</ATT>
+                        <ATT name="IsDerived">false</ATT>
+                        <ATT name="IsOrdered">false</ATT>
+                        <ATT name="IsUnique">false</ATT>
+                        <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+                        <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+                        <ATT name="Visibility">Public</ATT>
+                        <ATT name="IsClass">false</ATT>
+                        <ATT name="IsAbstract">false</ATT>
+                        <ATT name="Name"></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <COMP relation="Opposite">
+                          <COMPID name="stepperMotor" mc="Standard.AssociationEnd" uid="c7f0c163-63d6-4f2c-b754-47afd785f6a4"/>
+                        </COMP>
+                        <COMP relation="Association">
+                          <OBJECT>
+                            <ID name="" mc="Standard.Association" uid="9213babe-db15-4013-bbe3-377ce3473e5e"/>
+                            <ATTRIBUTES>
+                              <ATT name="Name"></ATT>
+                              <ATT name="status">1970354901745664</ATT>
+                            </ATTRIBUTES>
+                            <DEPENDENCIES></DEPENDENCIES>
+                          </OBJECT>
+                        </COMP>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                  <COMP relation="Association">
+                    <COMPID name="" mc="Standard.Association" uid="9213babe-db15-4013-bbe3-377ce3473e5e"/>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <COMPID name="Menu" mc="Standard.Class" uid="9e32fee5-2134-4e35-951d-d79b47ebc454"/>
+        <OBJECT>
+          <ID name="GraphicPage" mc="Standard.Enumeration" uid="b86d0558-4a2f-48e8-8364-5560b06577f2"/>
+          <ATTRIBUTES>
+            <ATT name="IsElementary">true</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="IsLeaf">false</ATT>
+            <ATT name="IsRoot">false</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="Name"><![CDATA[GraphicPage]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="OwnedEnd">
+              <OBJECT>
+                <ID name="menu" mc="Standard.AssociationEnd" uid="992c2a14-fdde-48d5-8a76-b3a05d4cd8bd"/>
+                <ATTRIBUTES>
+                  <ATT name="Aggregation">KindIsComposition</ATT>
+                  <ATT name="IsChangeable">true</ATT>
+                  <ATT name="Changeable">ReadWrite</ATT>
+                  <ATT name="IsDerived">false</ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+                  <ATT name="Visibility">Public</ATT>
+                  <ATT name="IsClass">false</ATT>
+                  <ATT name="IsAbstract">false</ATT>
+                  <ATT name="Name"><![CDATA[menu]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Target">
+                    <ID name="Menu" mc="Standard.Class" uid="9e32fee5-2134-4e35-951d-d79b47ebc454"/>
+                  </LINK>
+                  <COMP relation="Opposite">
+                    <OBJECT>
+                      <ID name="" mc="Standard.AssociationEnd" uid="b0991480-2f72-4e87-8380-a3e24df47578"/>
+                      <ATTRIBUTES>
+                        <ATT name="Aggregation">KindIsAssociation</ATT>
+                        <ATT name="IsChangeable">true</ATT>
+                        <ATT name="Changeable">ReadWrite</ATT>
+                        <ATT name="IsDerived">false</ATT>
+                        <ATT name="IsOrdered">false</ATT>
+                        <ATT name="IsUnique">false</ATT>
+                        <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+                        <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+                        <ATT name="Visibility">Public</ATT>
+                        <ATT name="IsClass">false</ATT>
+                        <ATT name="IsAbstract">false</ATT>
+                        <ATT name="Name"></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES>
+                        <COMP relation="Opposite">
+                          <COMPID name="menu" mc="Standard.AssociationEnd" uid="992c2a14-fdde-48d5-8a76-b3a05d4cd8bd"/>
+                        </COMP>
+                        <COMP relation="Association">
+                          <OBJECT>
+                            <ID name="" mc="Standard.Association" uid="1326346b-552c-4ecf-83b5-10fd44f56076"/>
+                            <ATTRIBUTES>
+                              <ATT name="Name"></ATT>
+                              <ATT name="status">1970354901745664</ATT>
+                            </ATTRIBUTES>
+                            <DEPENDENCIES></DEPENDENCIES>
+                          </OBJECT>
+                        </COMP>
+                      </DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                  <COMP relation="Association">
+                    <COMPID name="" mc="Standard.Association" uid="1326346b-552c-4ecf-83b5-10fd44f56076"/>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <COMPID name="PowerMonitoring" mc="Standard.Class" uid="ee11dab9-4110-46cd-a9df-55144a2ac258"/>
+        <OBJECT>
+          <ID name="MonitoringGainMode" mc="Standard.Enumeration" uid="bb71bc99-a752-4b62-a3a8-a6cf62fc1d77"/>
+          <ATTRIBUTES>
+            <ATT name="IsElementary">true</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="IsLeaf">false</ATT>
+            <ATT name="IsRoot">false</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="Name"><![CDATA[MonitoringGainMode]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <COMPID name="ControllerType" mc="Standard.Class" uid="4f1b6196-a195-4c6e-acd4-778478f99768"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

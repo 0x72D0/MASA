@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="masa" version="4">
+  <OBJECT>
+    <ID name="masa" mc="Standard.Package" uid="c8cc82ca-e8b7-4dc6-9fc6-11da4ae97349"/>
+    <PID name="MASA" mc="Standard.Project" uid="d7db0923-a14e-48a3-9ad2-8c09fff2bb6f"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[masa]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="View" mc="Standard.Package" uid="b9a3ead4-2c35-47e0-8fba-74f115714b1e"/>
+        <COMPID name="Controller" mc="Standard.Package" uid="cc58c3f0-2aa1-4742-8417-f2b4a9df01d0"/>
+        <COMPID name="Model" mc="Standard.Package" uid="fb7f28bd-42c4-400c-b52b-583772c71316"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Rover" mc="Standard.ClassDiagram" uid="6519e201-c5ba-4b2e-a571-408a9b64152e"/>
+        <COMPID name="Houston" mc="Standard.ClassDiagram" uid="e20df3be-9986-40f3-babb-6c7d23b858bb"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

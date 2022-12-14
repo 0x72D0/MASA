@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="MASA" version="4">
+  <OBJECT>
+    <ID name="MASA" mc="Standard.Project" uid="d7db0923-a14e-48a3-9ad2-8c09fff2bb6f"/>
+    <ATTRIBUTES>
+      <ATT name="ProjectContext"></ATT>
+      <ATT name="ProjectDescr"></ATT>
+      <ATT name="Name"><![CDATA[MASA]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="Model">
+        <COMPID name="masa" mc="Standard.Package" uid="c8cc82ca-e8b7-4dc6-9fc6-11da4ae97349"/>
+      </COMP>
+      <COMP relation="DiagramRoot">
+        <COMPID name="MASA" mc="Infrastructure.DiagramSet" uid="54c71232-d016-4c54-993d-9e833960679f"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

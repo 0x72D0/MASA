@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="MASA" version="4">
+  <OBJECT>
+    <ID name="MASA" mc="Infrastructure.DiagramSet" uid="54c71232-d016-4c54-993d-9e833960679f"/>
+    <PID name="MASA" mc="Standard.Project" uid="d7db0923-a14e-48a3-9ad2-8c09fff2bb6f"/>
+    <ATTRIBUTES>
+      <ATT name="Name"><![CDATA[MASA]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES></DEPENDENCIES>
+  </OBJECT>
+</EXT>

@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="View" version="4">
+  <OBJECT>
+    <ID name="View" mc="Standard.Package" uid="b9a3ead4-2c35-47e0-8fba-74f115714b1e"/>
+    <PID name="masa" mc="Standard.Package" uid="c8cc82ca-e8b7-4dc6-9fc6-11da4ae97349"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[View]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="LcdViewer" mc="Standard.Class" uid="6c514fcc-2f91-49ba-a39d-3d7419999186"/>
+        <COMPID name="DcMotorViewer" mc="Standard.Class" uid="1cd0e404-a4ef-45f8-92cc-f5669886b22d"/>
+        <COMPID name="StepperMotorViewer" mc="Standard.Class" uid="7d471426-c30e-417a-992a-3c9090b09bd6"/>
+        <COMPID name="ServoMotorViewer" mc="Standard.Class" uid="70ebd5c1-e6bb-4aac-8c05-64eee621ead5"/>
+        <COMPID name="GpioViewer" mc="Standard.Class" uid="69cf71b1-350e-4863-b607-1cea74895532"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
