@@ -28,21 +28,21 @@ class StepperMotor:
     def update(self, action: Action) -> None:
         if self._currentState == StepperState.INIT:
             if action.get_actionType() == ActionType.TOGGLE:
-                print("servo Toggle ON")
+                print("stepper Toggle ON")
                 self._currentStep = action.get_actionArguments()[0]
                 self._currentState = StepperState.TOGGLE_ON
             
             elif action.get_actionType() == ActionType.RELEASE_ON:
-                print("servo Release ON")
+                print("stepper Release ON")
                 self._currentStep = action.get_actionArguments()[0]
                 self._currentState = StepperState.RELEASE_ON
             
             elif action.get_actionType() == ActionType.STEP:
-                print("servo STEP")
+                print("stepper STEP")
                 self._currentStep += action.get_actionArguments()[0]
 
             elif action.get_actionType() == ActionType.ANALOG:
-                print("servo ANALOG")
+                print("stepper ANALOG")
                 args = action.get_actionArguments()
                 # first argument is the type of analog control
                 if args[0] == 0:
@@ -53,13 +53,13 @@ class StepperMotor:
             
         elif self._currentState == StepperState.TOGGLE_ON:
             if action.get_actionType() == ActionType.TOGGLE:
-                print("servo Toggle OFF")
+                print("stepper Toggle OFF")
                 self._currentStep = 0
                 self._currentState = StepperState.INIT
         
         elif self._currentState == StepperState.RELEASE_ON:
             if action.get_actionType() == ActionType.RELEASE_OFF:
-                print("servo Release OFF")
+                print("stepper Release OFF")
                 self._currentStep = 0
                 self._currentState = StepperState.INIT
     

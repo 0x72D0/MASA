@@ -47,7 +47,7 @@ class ProfileConfigContext(IMenuContext):
                 nextContext = MappingMenuContext(self._model, 
                 [
                     ChooseComponentMenuContext(self._model, action, component, self._model.get_servoNum()-1),
-                    AddNumberArgumentsMenuContext(self._model, action, component, u'servo angle', 150, 0),
+                    AddNumberArgumentsMenuContext(self._model, action, component, u'servo angle', 90, -90),
                     WaitingInputMenuContext(self._model, action, component)
                 ])
                 menuStack.add(nextContext)
@@ -71,7 +71,7 @@ class ProfileConfigContext(IMenuContext):
                 nextContext1 = MappingMenuContext(self._model, 
                 [
                     ChooseComponentMenuContext2(self._model, component1, component2, self._model.get_servoNum()-1),
-                    AddNumberArgumentsMenuContext(self._model, action1, component1, u'servo angle', 150, 0),
+                    AddNumberArgumentsMenuContext(self._model, action1, component1, u'servo angle', 90, -90),
                     WaitingInputMenuContext(self._model, action1, component1)
                 ])
                 menuStack.add(nextContext1)
@@ -85,7 +85,7 @@ class ProfileConfigContext(IMenuContext):
                 nextContext = MappingMenuContext(self._model, 
                 [
                     ChooseComponentMenuContext(self._model, action, component, self._model.get_servoNum()-1),
-                    AddNumberArgumentsMenuContext(self._model, action, component, u'servo angle', 150, -150),
+                    AddNumberArgumentsMenuContext(self._model, action, component, u'servo angle', 90, -90),
                     WaitingInputMenuContext(self._model, action, component)
                 ])
                 menuStack.add(nextContext)
@@ -100,7 +100,7 @@ class ProfileConfigContext(IMenuContext):
                 nextContext = MappingMenuContext(self._model, 
                 [
                     ChooseComponentMenuContext(self._model, action, component, self._model.get_servoNum()-1),
-                    AddNumberArgumentsMenuContext(self._model, action, component, u'servo angle', 150, 0),
+                    AddNumberArgumentsMenuContext(self._model, action, component, u'servo angle', 90, -90),
                     AnalogicInputMenuContext(self._model, action, component)
                 ])
                 menuStack.add(nextContext)

@@ -4,6 +4,7 @@ from Model.Model import Model
 from RPLCD import CharLCD
 from RPi import GPIO
 
+import copy
 import HardwareMapping
 from Model.Menu.MenuType import MenuType
 
@@ -24,6 +25,11 @@ class LcdView:
         self._currentCursorPos = 1
         self._lastSubPage = 0
 
+        # keep last variable to know if we need refreshing.
+        self._lastArg = []
+        self._lastCursorPos = 0
+        self._lastMenuType = MenuType.NONE
+
         self.SELECT_ARROW_CHAR = ( 0b00000, 0b00100, 0b00110, 0b11111, 0b11111, 0b00110, 0b00100, 0b00000 )
         self.UP_ARROW_CHAR = ( 0b00100, 0b01110, 0b11111, 0b00100, 0b00100, 0b00100, 0b00100, 0b00000 )
         self.CHECK_MARK = ( 0b00000, 0b00000, 0b00000, 0b00000, 0b00001, 0b00010, 0b10100, 0b01000 )
@@ -35,6 +41,13 @@ class LcdView:
     def update(self):
         currentMenuType, args = self._menu.get_currentMenuType()
         currentCursor = self._menu.get_currentIndex()
+
+        if(self._compare_two_args(self._lastArg, args) and self._lastMenuType == currentMenuType and self._lastCursorPos == currentCursor):
+            return
+        
+        self._lastArg = args
+        self._lastMenuType = currentMenuType
+        self._lastCursorPos = currentCursor
 
         if self._menu.needScreenRefresh():
             self._lcd.clear()
@@ -71,17 +84,18 @@ class LcdView:
             self._lastSubPage = currentSubPage
 
         # manage the case where nothing is in the list
+        print_args = copy.deepcopy(args)
         for i in range((currentSubPage*4+4)-len(args)):
-            args.append(u' ')
+            print_args.append(u' ')
 
         self._lcd.cursor_pos = (0,2)
-        self._lcd_write_string(args[currentSubPage*4+0])
+        self._lcd_write_string(print_args[currentSubPage*4+0])
         self._lcd.cursor_pos = (1,2)
-        self._lcd_write_string(args[currentSubPage*4+1])
+        self._lcd_write_string(print_args[currentSubPage*4+1])
         self._lcd.cursor_pos = (2,2)
-        self._lcd_write_string(args[currentSubPage*4+2])
+        self._lcd_write_string(print_args[currentSubPage*4+2])
         self._lcd.cursor_pos = (3,2)
-        self._lcd_write_string(args[currentSubPage*4+3])
+        self._lcd_write_string(print_args[currentSubPage*4+3])
 
         if cursorPos != self._currentCursorPos:
             self._drawCursor(cursorPos)
@@ -171,3 +185,26 @@ class LcdView:
     def _debug_string(self, string: str):
         if self.DEBUG_TERMINAL:
             print(string)
+    
+    def _compare_two_args(self, args1: list, args2: list):
+        if len(args1) != len(args2):
+            return False
+        
+        for i in range(len(args1)):
+            if(type(args1[i]) != type(args2[i])):
+                return False
+            
+            if(type(args1[i]) is str):
+                if(args1[i] != args2[i]):
+                    return False
+            
+            elif(type(args1[i] is int)):
+                if(args1[i] != args2[i]):
+                    return False
+            
+            else:
+                print("LCDView._compare_two_args: unknow args: " + str(type(args1)))
+                print("refreshing screen!")
+                return False
+        
+        return True

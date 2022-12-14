@@ -20,9 +20,10 @@ class PCA9685Config():
 class PCA9685View():
     """Class that control the PCA9685."""
     def __init__(self, model: Model, port:int, addr: int, configuration: list[PCA9685Config]):
-        self.SERVO_MAX_ANGLE = 180
+        self.SERVO_MAX_ANGLE = 90
         self.MOTOR_MAX_SPEED = 100
 
+        self.SERVO_RANGE = 0.5
         self.PERIOD = 20
         self.BYTE_RANGE = 4095
 
@@ -59,8 +60,8 @@ class PCA9685View():
         
         print("updating servo on channel: " + str(channel) + "! updating angle: " + str(angle))
 
-        ms = (angle/self.SERVO_MAX_ANGLE)*(self.PERIOD-1)
-        pwm = round(((ms+1)/(self.PERIOD))*self.BYTE_RANGE)
+        ms = ((angle/self.SERVO_MAX_ANGLE)*(self.SERVO_RANGE))+1.5
+        pwm = round(((ms)/(self.PERIOD))*self.BYTE_RANGE)
 
         byte1 = pwm & 0xFF
         byte2 = pwm >> 8

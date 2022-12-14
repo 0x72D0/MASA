@@ -19,21 +19,21 @@ class Motor:
     def update(self, action: Action) -> None:
         if self._currentState == MotorState.INIT:
             if action.get_actionType() == ActionType.TOGGLE:
-                print("servo Toggle ON")
+                print("motor Toggle ON")
                 self._currentSpeed = action.get_actionArguments()[0]
                 self._currentState = MotorState.TOGGLE_ON
             
             elif action.get_actionType() == ActionType.RELEASE_ON:
-                print("servo Release ON")
+                print("motor Release ON")
                 self._currentSpeed = action.get_actionArguments()[0]
                 self._currentState = MotorState.RELEASE_ON
             
             elif action.get_actionType() == ActionType.STEP:
-                print("servo STEP")
+                print("motor STEP")
                 self._currentSpeed += action.get_actionArguments()[0]
 
             elif action.get_actionType() == ActionType.ANALOG:
-                print("servo ANALOG")
+                print("motor ANALOG")
                 args = action.get_actionArguments()
                 # first argument is the type of analog control
                 if args[0] == 0:
@@ -44,13 +44,13 @@ class Motor:
             
         elif self._currentState == MotorState.TOGGLE_ON:
             if action.get_actionType() == ActionType.TOGGLE:
-                print("servo Toggle OFF")
+                print("motor Toggle OFF")
                 self._currentSpeed = 0
                 self._currentState = MotorState.INIT
         
         elif self._currentState == MotorState.RELEASE_ON:
             if action.get_actionType() == ActionType.RELEASE_OFF:
-                print("servo Release OFF")
+                print("motor Release OFF")
                 self._currentSpeed = 0
                 self._currentState = MotorState.INIT
     
